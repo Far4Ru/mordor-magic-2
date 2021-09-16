@@ -11,6 +11,7 @@
             mdi-transmission-tower
           </v-icon>
         </v-avatar>
+        <v-spacer></v-spacer>
 
         <v-btn
           v-for="link in links"
@@ -53,19 +54,6 @@
                     </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
-
-                <v-divider class="my-2"></v-divider>
-
-                <v-list-item
-                  link
-                  color="grey lighten-4"
-                >
-                  <v-list-item-content>
-                    <v-list-item-title>
-                      Настройки
-                    </v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
               </v-list>
             </v-sheet>
           </v-col>
@@ -94,16 +82,16 @@ export default {
       'Главная',
       'Объявления',
       'Участники',
-      'Библиотека',
+      // 'Библиотека',
       'События'
     ],
     pages: [
       'Профиль',
-      'Новости',
+      // 'Новости',
       'Сообщения',
       'Персонажи',
-      'Мои задачи',
-      'Закладки'
+      'Мои задачи'
+      // 'Закладки'
     ]
   }),
   components: {

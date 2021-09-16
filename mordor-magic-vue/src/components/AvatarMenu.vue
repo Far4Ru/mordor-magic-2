@@ -22,27 +22,33 @@
     <v-card>
       <v-list-item-content class="justify-center">
         <div class="mx-auto text-center">
-          <v-avatar
-            color="blue"
-          >
-            <span class="white--text text-h5">{{ user.initials }}</span>
-          </v-avatar>
-          <h3>{{ user.fullName }}</h3>
-          <p class="text-caption mt-1">
-            {{ user.email }}
-          </p>
+          <v-container>
+            <v-row>
+              <v-col>
+                <v-avatar
+                  color="blue"
+                >
+                  <span class="white--text text-h5">{{ user.initials }}</span>
+                </v-avatar>
+              </v-col>
+              <v-col>
+                <h4>{{ user.fullName }}</h4>
+                <p class="text-caption mt-1">
+                  {{ user.email }}
+                </p>
+              </v-col>
+            </v-row>
+          </v-container>
           <v-divider class="my-3"></v-divider>
           <v-btn
-            depressed
-            rounded
+            block
             text
           >
             Настройки
           </v-btn>
           <v-divider class="my-3"></v-divider>
           <v-btn
-            depressed
-            rounded
+            block
             text
           >
             Выйти
