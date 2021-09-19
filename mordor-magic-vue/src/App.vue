@@ -17,6 +17,7 @@
           v-for="link in links"
           :key="link"
           text
+          v-on:click="$router.push('Nasa');"
         >
           {{ link }}
         </v-btn>
@@ -63,7 +64,7 @@
               min-height="70vh"
               rounded="lg"
             >
-              <!--  -->
+              <router-view></router-view>
             </v-sheet>
           </v-col>
         </v-row>
