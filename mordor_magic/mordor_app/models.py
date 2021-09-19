@@ -1,50 +1,43 @@
 from django.db import models
 
-# Create your models here.
-class Warrior(models.Model):
-   """
-   Описание война
-   """
-
-   race_types = (
-       ('s', 'student'),
-       ('d', 'developer'),
-       ('t', 'teamlead'),
-   )
-   race = models.CharField(max_length=1, choices=race_types, verbose_name='Расса')
-   name = models.CharField(max_length=120, verbose_name='Имя')
-   level = models.IntegerField(verbose_name='Уровень', default=0)
-   skill = models.ManyToManyField('Skill', verbose_name='Умения', through='SkillOfWarrior',
-                                  related_name='warrior_skils')
-   profession = models.ForeignKey('Profession', on_delete=models.CASCADE, verbose_name='Профессия',
-                                  blank=True, null=True)
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
 
-class Profession(models.Model):
-   """
-   Описание профессии
-   """
-
-   title = models.CharField(max_length=120, verbose_name='Название')
-   description = models.TextField(verbose_name='Описание')
-
-
-class Skill(models.Model):
-   """
-   Описание умений
-   """
-
-   title = models.CharField(max_length=120, verbose_name='Наименование')
-
-   def __str__(self):
-       return self.title
+class User(AbstractUser):
+    roles = (
+        ('1', 'Глава'),
+        ('2', 'Зам. главы'),
+        ('3', 'Офицер'),
+        ('4', 'Элита'),
+        ('5', 'Участник'),
+    )
+    nickname = models.CharField(max_length=30)
+    role = models.CharField(choices=roles, max_length=1)
 
 
-class SkillOfWarrior(models.Model):
-   """
-   Описание умений война
-   """
+class Message(models.Model):
+    sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    recipient = models.IntegerField()
+    text = models.CharField(max_length=255)
+    date = models.DateField()
 
-   skill = models.ForeignKey('Skill', verbose_name='Умение', on_delete=models.CASCADE)
-   warrior = models.ForeignKey('Warrior', verbose_name='Воин', on_delete=models.CASCADE)
-   level = models.IntegerField(verbose_name='Уровень освоения умения')
+
+class Task(models.Model):
+    periods = (
+        ('d', 'day'),
+        ('w', 'week'),
+        ('m', 'month'),
+        ('y', 'year'),
+    )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    text = models.CharField(max_length=30)
+    time = models.CharField(max_length=5)
+    period = models.CharField(choices=periods, max_length=1)
+
+
+class Checklist(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    date = models.DateField
+    status = models.CharField(max_length=1)
