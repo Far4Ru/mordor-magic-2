@@ -15,12 +15,7 @@ export default {
   },
   data: () => ({
     username: '',
-    savedUsername: '',
-    greetings: [
-      { id: 1, text: 'Привет' },
-      { id: 2, text: 'Hello' },
-      { id: 3, text: 'Hola' }
-    ]
+    savedUsername: ''
   }),
   methods: {
     submitUsername () {
