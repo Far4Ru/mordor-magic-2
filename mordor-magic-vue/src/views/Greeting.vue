@@ -1,48 +1,17 @@
 <template>
   <section>
-    <greeting-card :username="savedUsername" />
     <h2>Это простой проект на Vue.</h2>
-    <v-form
-      @submit.prevent="submitUsername"
-      ref="form"
-      class="my-2"
-    >
-      <v-row>
-        <v-col cols="3" class="mx-auto">
-          <v-text-field
-            label="Введите своё имя"
-            v-model="username"
-            name="username"
-            placeholder="Иван Иванов"
-          />
-        </v-col>
-      </v-row>
-    </v-form>
-    <h3>Варианты приветствий:</h3>
-    <v-row>
-      <v-col cols="4" class="mx-auto">
-        <v-card
-          elevation="2"
-          class="px-2 py-5"
-          color="primary"
-          dark
-        >
-          <greeting-list :greetings="greetings" />
-        </v-card>
-      </v-col>
-    </v-row>
+    <login />
   </section>
 </template>
 
 <script>
-import GreetingCard from '@/components/GreetingCard'
-import GreetingList from '@/components/GreetingList'
+import Login from '@/components/Login'
 
 export default {
   name: 'Greeting',
   components: {
-    GreetingCard,
-    GreetingList
+    Login
   },
   data: () => ({
     username: '',

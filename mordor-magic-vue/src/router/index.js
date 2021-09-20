@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 // импортируем все представления, по
 // которым будем навигировать пользователя
 import Greeting from '@/views/Greeting.vue'
-import Nasa from '@/views/Nasa.vue'
+import Main from '@/views/Main.vue'
 
 Vue.use(VueRouter)
 
@@ -16,10 +16,45 @@ const routes = [
     component: Greeting
   },
   {
-    path: '/nasa',
-    name: 'Nasa',
-    component: Nasa
-  }
+    path: '/home',
+    name: 'Home',
+    component: Main
+  } /*
+  {
+    path: '/registration',
+    name: 'Registration',
+    component: Registration
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
+  },
+  {
+    path: '/messages',
+    name: 'Messages',
+    component: Messages
+  },
+  {
+    path: '/messages',
+    name: 'Messages',
+    component: Messages
+  },
+  {
+    path: '/info',
+    name: 'Info',
+    component: Info
+  },
+  {
+    path: '/members',
+    name: 'Members',
+    component: Members
+  },
+  {
+    path: '/events',
+    name: 'Events',
+    component: Events
+  } */
 ]
 
 // создаём новый экземпляр класса
