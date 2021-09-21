@@ -35,6 +35,7 @@
           <v-btn
             class="mr-4"
             @click="submit"
+            v-on:click="$router.push('Home');"
           >
             Войти
           </v-btn>

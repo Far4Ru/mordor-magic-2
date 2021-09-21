@@ -19,42 +19,7 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: Main
-  } /*
-  {
-    path: '/registration',
-    name: 'Registration',
-    component: Registration
-  },
-  {
-    path: '/profile',
-    name: 'Profile',
-    component: Profile
-  },
-  {
-    path: '/messages',
-    name: 'Messages',
-    component: Messages
-  },
-  {
-    path: '/messages',
-    name: 'Messages',
-    component: Messages
-  },
-  {
-    path: '/info',
-    name: 'Info',
-    component: Info
-  },
-  {
-    path: '/members',
-    name: 'Members',
-    component: Members
-  },
-  {
-    path: '/events',
-    name: 'Events',
-    component: Events
-  } */
+  }
 ]
 
 // создаём новый экземпляр класса

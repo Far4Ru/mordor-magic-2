@@ -2,16 +2,19 @@
   <section>
     <h2>Это простой проект на Vue.</h2>
     <login />
+    <registration />
   </section>
 </template>
 
 <script>
 import Login from '@/components/Login'
+import Registration from '@/components/Registration'
 
 export default {
   name: 'Greeting',
   components: {
-    Login
+    Login,
+    Registration
   },
   data: () => ({
     username: '',

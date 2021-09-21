@@ -17,7 +17,6 @@
           v-for="link in links"
           :key="link"
           text
-          v-on:click="$router.push('Nasa');"
         >
           {{ link }}
         </v-btn>
@@ -64,7 +63,7 @@
               min-height="70vh"
               rounded="lg"
             >
-              <router-view></router-view>
+              <members />
             </v-sheet>
           </v-col>
         </v-row>
@@ -76,6 +75,7 @@
 <script>
 
 import AvatarMenu from '@/components/AvatarMenu'
+import Members from '@/components/Members'
 export default {
   name: 'App',
   data: () => ({
@@ -96,7 +96,8 @@ export default {
     ]
   }),
   components: {
-    AvatarMenu
+    AvatarMenu,
+    Members
   }
 }
 </script>

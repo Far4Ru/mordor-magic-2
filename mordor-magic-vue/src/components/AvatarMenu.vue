@@ -50,6 +50,7 @@
           <v-btn
             block
             text
+            v-on:click="$router.push('/');"
           >
             Выйти
           </v-btn>
