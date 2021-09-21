@@ -2,7 +2,7 @@
   <section>
     <v-row>
       <v-col cols="6" class="mx-auto">
-
+        Сообщения
       </v-col>
     </v-row>
   </section>

@@ -2,7 +2,7 @@
   <section>
     <v-row>
       <v-col cols="6" class="mx-auto">
-
+        Задачи
       </v-col>
     </v-row>
   </section>

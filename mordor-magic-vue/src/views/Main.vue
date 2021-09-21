@@ -64,6 +64,13 @@
               rounded="lg"
             >
               <members />
+              <characters />
+              <adv />
+              <events />
+              <messages />
+              <profile />
+              <settings />
+              <tasks />
             </v-sheet>
           </v-col>
         </v-row>
@@ -76,6 +83,13 @@
 
 import AvatarMenu from '@/components/AvatarMenu'
 import Members from '@/components/Members'
+import Characters from '@/components/Characters'
+import Adv from '@/components/Adv'
+import Events from '@/components/Events'
+import Messages from '@/components/Messages'
+import Profile from '@/components/Profile'
+import Settings from '@/components/Settings'
+import Tasks from '@/components/Tasks'
 export default {
   name: 'App',
   data: () => ({
@@ -97,7 +111,14 @@ export default {
   }),
   components: {
     AvatarMenu,
-    Members
+    Members,
+    Characters,
+    Adv,
+    Events,
+    Messages,
+    Profile,
+    Settings,
+    Tasks
   }
 }
 </script>
