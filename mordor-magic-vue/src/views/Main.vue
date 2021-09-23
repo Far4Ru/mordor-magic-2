@@ -6,7 +6,7 @@
       flat
     >
       <v-container class="py-0 fill-height">
-        <v-avatar color="grey">
+        <v-avatar color="grey" @click="page = 'profile'; leftPanel = true">
           <v-icon>
             mdi-transmission-tower
           </v-icon>
@@ -14,9 +14,10 @@
         <v-spacer></v-spacer>
 
         <v-btn
-          v-for="link in links"
+          v-for="(val, link) in links"
           :key="link"
           text
+          @click="page = val; leftPanel = val == 'profile' ? true : false"
         >
           {{ link }}
         </v-btn>
@@ -40,17 +41,17 @@
     <v-main class="grey lighten-3">
       <v-container>
         <v-row>
-          <v-col cols="2">
+          <v-col cols="2" v-show='leftPanel'>
             <v-sheet rounded="lg">
               <v-list color="transparent">
                 <v-list-item
-                  v-for="page in pages"
-                  :key="page"
+                  v-for="(val, pageName) in pages"
+                  :key = pageName
                   link
                 >
                   <v-list-item-content>
-                    <v-list-item-title>
-                      {{ page }}
+                    <v-list-item-title @click="page = val">
+                      {{ pageName }}
                     </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
@@ -63,14 +64,14 @@
               min-height="70vh"
               rounded="lg"
             >
-              <members />
-              <characters />
-              <adv />
-              <events />
-              <messages />
-              <profile />
-              <settings />
-              <tasks />
+              <members v-show="page == 'members'"/>
+              <characters v-show="page == 'characters'"/>
+              <adv v-show="page == 'adv'"/>
+              <events v-show="page == 'events'"/>
+              <messages v-show="page == 'messages'"/>
+              <profile v-show="page == 'profile'"/>
+              <settings v-show="page == 'settings'"/>
+              <tasks v-show="page == 'tasks'"/>
             </v-sheet>
           </v-col>
         </v-row>
@@ -93,22 +94,23 @@ import Tasks from '@/components/Tasks'
 export default {
   name: 'App',
   data: () => ({
-    links: [
-      'Главная',
-      'Объявления',
-      'Участники',
+    links: {
+      Главная: 'profile',
+      Объявления: 'adv',
+      Участники: 'members',
       // 'Библиотека',
-      'События'
-    ],
-    pages: [
-      'Профиль',
+      События: 'events'
+    },
+    pages: {
+      Профиль: 'profile',
       // 'Новости',
-      'Сообщения',
-      'Персонажи',
-      'Мои задачи'
+      Сообщения: 'messages',
+      Персонажи: 'characters',
+      'Мои задачи': 'tasks'
       // 'Закладки'
-    ]
+    }
   }),
+  props: ['page', 'leftPanel'],
   components: {
     AvatarMenu,
     Members,
@@ -119,6 +121,10 @@ export default {
     Profile,
     Settings,
     Tasks
+  },
+  created () {
+    this.page = 'profile'
+    this.leftPanel = true
   }
 }
 </script>

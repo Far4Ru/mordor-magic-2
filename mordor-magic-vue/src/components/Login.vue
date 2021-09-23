@@ -3,22 +3,15 @@
     <form>
       <v-row>
         <v-col cols="3" class="mx-auto">
+          <h2>Вход</h2>
           <v-text-field
             v-model="name"
             :error-messages="nameErrors"
-            :counter="10"
-            label="Name"
+            :counter="30"
+            label="Имя"
             required
             @input="$v.name.$touch()"
             @blur="$v.name.$touch()"
-          ></v-text-field>
-          <v-text-field
-            v-model="email"
-            :error-messages="emailErrors"
-            label="E-mail"
-            required
-            @input="$v.email.$touch()"
-            @blur="$v.email.$touch()"
           ></v-text-field>
           <v-text-field
             v-model="password"
@@ -26,12 +19,10 @@
             :rules="[rules.required, rules.min]"
             :type="show1 ? 'text' : 'password'"
             name="input-10-1"
-            label="Normal with hint text"
-            hint="At least 8 characters"
+            label="Пароль"
             counter
             @click:append="show1 = !show1"
           ></v-text-field>
-
           <v-btn
             class="mr-4"
             @click="submit"
@@ -39,8 +30,8 @@
           >
             Войти
           </v-btn>
-          <v-btn @click="clear">
-            clear
+          <v-btn @click="changeToRegistration">
+            Регистрация
           </v-btn>
         </v-col>
       </v-row>
@@ -79,19 +70,12 @@ export default {
     checkbox: false,
     show1: false,
     rules: {
-      required: value => !!value || 'Required.',
-      min: v => v.length >= 8 || 'Min 8 characters',
-      emailMatch: () => ("The email and password you entered don't match")
+      required: value => !!value || 'Необходимо заполнить',
+      min: v => v.length >= 8 || 'Не менее 8 символов'
     }
   }),
 
   computed: {
-    checkboxErrors () {
-      const errors = []
-      if (!this.$v.checkbox.$dirty) return errors
-      !this.$v.checkbox.checked && errors.push('You must agree to continue!')
-      return errors
-    },
     selectErrors () {
       const errors = []
       if (!this.$v.select.$dirty) return errors
@@ -101,15 +85,7 @@ export default {
     nameErrors () {
       const errors = []
       if (!this.$v.name.$dirty) return errors
-      !this.$v.name.maxLength && errors.push('Name must be at most 10 characters long')
-      !this.$v.name.required && errors.push('Name is required.')
-      return errors
-    },
-    emailErrors () {
-      const errors = []
-      if (!this.$v.email.$dirty) return errors
-      !this.$v.email.email && errors.push('Must be valid e-mail')
-      !this.$v.email.required && errors.push('E-mail is required')
+      !this.$v.name.required && errors.push('Необходимо заполнить.')
       return errors
     }
   },
@@ -121,9 +97,11 @@ export default {
     clear () {
       this.$v.$reset()
       this.name = ''
-      this.email = ''
       this.select = null
       this.checkbox = false
+    },
+    changeToRegistration () {
+      // TODO - Переключение на регистрацию
     }
   }
 }

@@ -1,8 +1,7 @@
 <template>
   <section>
-    <h2>Это простой проект на Vue.</h2>
-    <login />
-    <registration />
+    <login v-show="isLoginPage" />
+    <registration v-show="!isLoginPage" />
   </section>
 </template>
 
@@ -20,6 +19,7 @@ export default {
     username: '',
     savedUsername: ''
   }),
+  props: ['isLoginPage'],
   methods: {
     submitUsername () {
       // сохраним username в localStorage
@@ -39,6 +39,7 @@ export default {
       this.savedUsername = localStorage.getItem('username')
       this.username = this.savedUsername
     }
+    this.isLoginPage = true
   }
 }
 </script>
