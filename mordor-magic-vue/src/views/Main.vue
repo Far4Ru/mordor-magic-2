@@ -19,12 +19,20 @@
           text
           @click="page = val; leftPanel = val == 'profile' ? true : false"
         >
-          {{ link }}
+          <v-badge
+            bordered
+            :value="0"
+            dot
+          >
+            {{ link }}
+          </v-badge>
         </v-btn>
 
         <v-spacer></v-spacer>
+        <v-spacer></v-spacer>
+        <v-spacer></v-spacer>
 
-        <v-responsive max-width="260">
+        <!-- <v-responsive max-width="260">
           <v-text-field
             dense
             flat
@@ -32,7 +40,7 @@
             rounded
             solo-inverted
           ></v-text-field>
-        </v-responsive>
+        </v-responsive> -->
         <v-spacer></v-spacer>
         <avatar-menu />
       </v-container>
@@ -51,7 +59,14 @@
                 >
                   <v-list-item-content>
                     <v-list-item-title @click="page = val">
-                      {{ pageName }}
+                      <v-badge
+                        color="blue"
+                        :content="0"
+                        :value="0"
+                        inline
+                      >
+                        {{ pageName }}
+                      </v-badge>
                     </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
@@ -96,7 +111,7 @@ export default {
   data: () => ({
     links: {
       Главная: 'profile',
-      Объявления: 'adv',
+      // Объявления: 'adv',
       Участники: 'members',
       // 'Библиотека',
       События: 'events'
@@ -104,9 +119,9 @@ export default {
     pages: {
       Профиль: 'profile',
       // 'Новости',
-      Сообщения: 'messages',
-      Персонажи: 'characters',
-      'Мои задачи': 'tasks'
+      // Сообщения: 'messages',
+      Персонажи: 'characters'
+      // 'Мои задачи': 'tasks'
       // 'Закладки'
     }
   }),
