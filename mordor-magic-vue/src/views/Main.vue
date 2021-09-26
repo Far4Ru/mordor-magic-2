@@ -42,7 +42,7 @@
           ></v-text-field>
         </v-responsive> -->
         <v-spacer></v-spacer>
-        <avatar-menu />
+        <avatar-menu @changePage='changePage' />
       </v-container>
     </v-app-bar>
 
@@ -135,8 +135,9 @@ export default {
     Tasks
   },
   methods: {
-    changePage (name) {
+    changePage (name, showLeft = true) {
       this.page = name
+      this.leftPanel = showLeft
     },
     async checkToken () {
       // https://blog.sqreen.com/authentication-best-practices-vue/

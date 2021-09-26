@@ -43,6 +43,7 @@
           <v-btn
             block
             text
+            @click="changePageToSettings"
           >
             Настройки
           </v-btn>
@@ -50,7 +51,7 @@
           <v-btn
             block
             text
-            v-on:click="$router.push('/');"
+            v-on:click="logout"
           >
             Выйти
           </v-btn>
@@ -60,6 +61,7 @@
   </v-menu>
 </template>
 <script>
+import server from '@/server'
 export default {
   name: 'AvatarMenu',
   data: () => ({
@@ -68,8 +70,24 @@ export default {
       fullName: 'Sasha',
       email: 'far4ru@gmail.com'
     }
-  })
-  // TODO: - http://127.0.0.1:8000/auth/token/logout/
-  // Authorization Token ...
+  }),
+  methods: {
+    async logout () {
+      this.axios.defaults.headers.common.Authorization = 'Token ' + localStorage.getItem('user-token')
+      this.axios
+        .post(server + 'auth/token/logout/')
+        .then(response => {
+          this.info = response
+          if (response.status === 200 || response.status === 204) this.$router.push('/')
+        })
+        .catch(e => {
+          console.error('AN API ERROR', e)
+          // this.$router.push('/')
+        })
+    },
+    changePageToSettings () {
+      this.$emit('changePage', 'settings', false)
+    }
+  }
 }
 </script>

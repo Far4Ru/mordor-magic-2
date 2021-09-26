@@ -91,6 +91,7 @@ export default {
       const data = new FormData()
       data.set('username', this.name)
       data.set('password', this.password)
+      this.axios.defaults.headers.common.Authorization = null
       const config = {
         header: {
           'Content-Type': 'multipart/form-data'
@@ -109,6 +110,15 @@ export default {
           console.error('AN API ERROR', e)
         })
     },
+    async checkToken () {
+      this.axios.defaults.headers.common.Authorization = 'Token ' + localStorage.getItem('user-token')
+      this.axios
+        .get(server + 'auth/users/me/')
+        .then(response => {
+          this.info = response
+          if (response.status === 200) this.$router.push('/Home')
+        })
+    },
     clear () {
       this.$v.$reset()
       this.name = ''
@@ -118,6 +128,9 @@ export default {
     changeToRegistration () {
       this.$emit('changeLoginPage', false)
     }
+  },
+  created () {
+    this.checkToken()
   }
 }
 </script>
