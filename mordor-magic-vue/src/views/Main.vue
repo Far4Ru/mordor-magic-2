@@ -137,9 +137,16 @@ export default {
     Settings,
     Tasks
   },
+  methods: {
+    changePage (name) {
+      this.page = name
+    }
+  },
   created () {
     this.page = 'profile'
     this.leftPanel = true
+    // TODO: - http://127.0.0.1:8000/auth/users/me
+    // Authorization Token ...
   }
 }
 </script>

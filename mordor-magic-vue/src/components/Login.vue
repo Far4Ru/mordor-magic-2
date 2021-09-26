@@ -14,7 +14,6 @@
             @blur="$v.name.$touch()"
           ></v-text-field>
           <v-text-field
-            v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min]"
             :type="show1 ? 'text' : 'password'"
@@ -71,7 +70,7 @@ export default {
     show1: false,
     rules: {
       required: value => !!value || 'Необходимо заполнить',
-      min: v => v.length >= 8 || 'Не менее 8 символов'
+      min: v => (v && v.length >= 8) || 'Не менее 8 символов'
     }
   }),
 
@@ -93,6 +92,8 @@ export default {
   methods: {
     submit () {
       this.$v.$touch()
+      // TODO: - http://127.0.0.1:8000/auth/token/login/
+      // username, password
     },
     clear () {
       this.$v.$reset()
@@ -101,7 +102,7 @@ export default {
       this.checkbox = false
     },
     changeToRegistration () {
-      // TODO - Переключение на регистрацию
+      this.$emit('changeLoginPage', false)
     }
   }
 }

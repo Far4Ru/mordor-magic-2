@@ -1,7 +1,7 @@
 <template>
   <section>
-    <login v-show="isLoginPage" />
-    <registration v-show="!isLoginPage" />
+    <login @changeLoginPage="changeLoginPage" v-show="isLoginPage" />
+    <registration @changeLoginPage="changeLoginPage" v-show="!isLoginPage" />
   </section>
 </template>
 
@@ -16,10 +16,11 @@ export default {
     Registration
   },
   data: () => ({
+    isLoginPage: true,
     username: '',
     savedUsername: ''
   }),
-  props: ['isLoginPage'],
+  props: [],
   methods: {
     submitUsername () {
       // сохраним username в localStorage
@@ -30,6 +31,9 @@ export default {
       this.savedUsername = this.username
       // очистим форму
       this.$refs.form.reset()
+    },
+    changeLoginPage (isLogin) {
+      this.isLoginPage = isLogin
     }
   },
   created () {
@@ -39,7 +43,8 @@ export default {
       this.savedUsername = localStorage.getItem('username')
       this.username = this.savedUsername
     }
-    this.isLoginPage = true
+  },
+  mounted () {
   }
 }
 </script>

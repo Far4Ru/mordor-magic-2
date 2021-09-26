@@ -3,11 +3,12 @@
     <form>
       <v-row>
         <v-col cols="3" class="mx-auto">
+          <h2>Регистрация</h2>
           <v-text-field
             v-model="name"
             :error-messages="nameErrors"
             :counter="10"
-            label="Name"
+            label="Имя"
             required
             @input="$v.name.$touch()"
             @blur="$v.name.$touch()"
@@ -15,19 +16,18 @@
           <v-text-field
             v-model="email"
             :error-messages="emailErrors"
-            label="E-mail"
+            label="Эл. почта"
             required
             @input="$v.email.$touch()"
             @blur="$v.email.$touch()"
           ></v-text-field>
           <v-text-field
-            v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min]"
             :type="show1 ? 'text' : 'password'"
             name="input-10-1"
-            label="Normal with hint text"
-            hint="At least 8 characters"
+            label="Пароль"
+            hint="От 8 символов"
             counter
             @click:append="show1 = !show1"
           ></v-text-field>
@@ -36,10 +36,10 @@
             class="mr-4"
             @click="submit"
           >
-            Войти
+            Зарегистрироваться
           </v-btn>
-          <v-btn @click="clear">
-            clear
+          <v-btn @click="changeToLogin">
+            Назад
           </v-btn>
         </v-col>
       </v-row>
@@ -55,7 +55,7 @@ export default {
   mixins: [validationMixin],
 
   validations: {
-    name: { required, maxLength: maxLength(10) },
+    name: { required, maxLength: maxLength(30) },
     email: { required, email },
     select: { required },
     checkbox: {
@@ -78,37 +78,29 @@ export default {
     checkbox: false,
     show1: false,
     rules: {
-      required: value => !!value || 'Required.',
-      min: v => v.length >= 8 || 'Min 8 characters',
-      emailMatch: () => ("The email and password you entered don't match")
+      required: value => !!value || 'Необходимо заполнить',
+      min: v => (v && v.length >= 8) || 'Минимум 8 символов'
     }
   }),
 
   computed: {
-    checkboxErrors () {
-      const errors = []
-      if (!this.$v.checkbox.$dirty) return errors
-      !this.$v.checkbox.checked && errors.push('You must agree to continue!')
-      return errors
-    },
     selectErrors () {
       const errors = []
       if (!this.$v.select.$dirty) return errors
-      !this.$v.select.required && errors.push('Item is required')
+      !this.$v.select.required && errors.push('Необходимо заполнить')
       return errors
     },
     nameErrors () {
       const errors = []
       if (!this.$v.name.$dirty) return errors
-      !this.$v.name.maxLength && errors.push('Name must be at most 10 characters long')
-      !this.$v.name.required && errors.push('Name is required.')
+      !this.$v.name.required && errors.push('Необходимо заполнить')
       return errors
     },
     emailErrors () {
       const errors = []
       if (!this.$v.email.$dirty) return errors
-      !this.$v.email.email && errors.push('Must be valid e-mail')
-      !this.$v.email.required && errors.push('E-mail is required')
+      !this.$v.email.email && errors.push('Почта должна быть действительной')
+      !this.$v.email.required && errors.push('Необходимо заполнить')
       return errors
     }
   },
@@ -116,6 +108,8 @@ export default {
   methods: {
     submit () {
       this.$v.$touch()
+      // TODO: - http://127.0.0.1:8000/auth/users/
+      // username, password, email
     },
     clear () {
       this.$v.$reset()
@@ -123,6 +117,9 @@ export default {
       this.email = ''
       this.select = null
       this.checkbox = false
+    },
+    changeToLogin () {
+      this.$emit('changeLoginPage', true)
     }
   }
 }

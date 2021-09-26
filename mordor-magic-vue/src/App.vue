@@ -4,7 +4,7 @@
       app
     >
       <div class="d-flex align-center">
-        <h1 class="headline">MORDOR</h1>
+        <h1 class="headline">Гильдия MORDOR (из игры Eternal Magic)</h1>
       </div>
     </v-app-bar>
     <v-main class="d-flex align-center text-center">

@@ -69,5 +69,7 @@ export default {
       email: 'far4ru@gmail.com'
     }
   })
+  // TODO: - http://127.0.0.1:8000/auth/token/logout/
+  // Authorization Token ...
 }
 </script>
