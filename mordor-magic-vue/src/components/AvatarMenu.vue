@@ -15,7 +15,7 @@
           color="blue"
           size="42"
         >
-          <span class="white--text text-h5">{{ user.initials }}</span>
+          <span class="white--text text-h5">{{ changedInitials }}</span>
         </v-avatar>
       </v-btn>
     </template>
@@ -28,13 +28,13 @@
                 <v-avatar
                   color="blue"
                 >
-                  <span class="white--text text-h5">{{ user.initials }}</span>
+                  <span class="white--text text-h5">{{ changedInitials }}</span>
                 </v-avatar>
               </v-col>
               <v-col>
-                <h4>{{ user.fullName }}</h4>
+                <h4>{{ changedFullName }}</h4>
                 <p class="text-caption mt-1">
-                  {{ user.email }}
+                  {{ changedEmail }}
                 </p>
               </v-col>
             </v-row>
@@ -65,13 +65,50 @@ import server from '@/server'
 export default {
   name: 'AvatarMenu',
   data: () => ({
-    user: {
-      initials: 'S',
-      fullName: 'Sasha',
-      email: 'far4ru@gmail.com'
-    }
+    initials: '',
+    fullName: '',
+    email: ''
   }),
+  computed: {
+    changedEmail: {
+      get: function () {
+        return this.email
+      },
+      set: function (email) {
+        this.email = email
+        return this.email
+      }
+    },
+    changedFullName: {
+      get: function () {
+        return this.fullName
+      },
+      set: function (name) {
+        this.fullName = name
+        return this.fullName
+      }
+    },
+    changedInitials: {
+      get: function () {
+        return this.fullName.charAt(0)
+      }
+    }
+  },
   methods: {
+    async getUserInfo () {
+      this.axios.defaults.headers.common.Authorization = 'Token ' + localStorage.getItem('user-token')
+      this.axios
+        .get(server + 'auth/users/me/')
+        .then(response => {
+          if (response.status === 200) {
+            this.changedFullName = response.data.username
+            this.changedEmail = response.data.email
+          }
+        })
+        .catch(e => {
+          console.error('AN API ERROR', e)
+        })
+    },
     async logout () {
       this.axios.defaults.headers.common.Authorization = 'Token ' + localStorage.getItem('user-token')
       this.axios
@@ -88,6 +125,9 @@ export default {
     changePageToSettings () {
       this.$emit('changePage', 'settings', false)
     }
+  },
+  created () {
+    this.getUserInfo()
   }
 }
 </script>
