@@ -146,7 +146,8 @@ export default {
     this.page = 'profile'
     this.leftPanel = true
     // TODO: - http://127.0.0.1:8000/auth/users/me
-    // Authorization Token ...
+    // https://blog.sqreen.com/authentication-best-practices-vue/
+    // console.log(localStorage.getItem('user-token'))
   }
 }
 </script>

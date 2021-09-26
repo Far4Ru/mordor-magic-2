@@ -22,6 +22,7 @@
             @blur="$v.email.$touch()"
           ></v-text-field>
           <v-text-field
+            v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min]"
             :type="show1 ? 'text' : 'password'"
@@ -50,6 +51,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, email } from 'vuelidate/lib/validators'
+import server from '@/server'
 
 export default {
   mixins: [validationMixin],
@@ -68,13 +70,8 @@ export default {
   data: () => ({
     name: '',
     email: '',
+    password: '',
     select: null,
-    items: [
-      'Item 1',
-      'Item 2',
-      'Item 3',
-      'Item 4'
-    ],
     checkbox: false,
     show1: false,
     rules: {
@@ -108,8 +105,32 @@ export default {
   methods: {
     submit () {
       this.$v.$touch()
+      this.register()
       // TODO: - http://127.0.0.1:8000/auth/users/
       // username, password, email
+    },
+    async register () {
+      const data = new FormData()
+      data.set('username', this.name)
+      data.set('email', this.email)
+      data.set('password', this.password)
+      const config = {
+        header: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      this.axios
+        .post(server + 'auth/users/', data, config)
+        .then(response => {
+          this.info = response
+          console.log(this.info, response.data.auth_token)
+          if (response.status === 201) {
+            this.changeToLogin()
+          }
+        })
+        .catch(e => {
+          console.error('AN API ERROR', e)
+        })
     },
     clear () {
       this.$v.$reset()

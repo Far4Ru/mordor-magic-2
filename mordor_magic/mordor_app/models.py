@@ -11,10 +11,10 @@ class User(AbstractUser):
         ('4', 'Элита'),
         ('5', 'Участник'),
     )
-    nickname = models.CharField(max_length=30)
-    role = models.CharField(choices=roles, max_length=1)
-    registration_status = models.BooleanField()
-    user_online_date = models.DateField()
+    nickname = models.CharField(max_length=30, null=True)
+    role = models.CharField(choices=roles, max_length=1, null=True)
+    registration_status = models.BooleanField(null=True)
+    user_online_date = models.DateField(null=True)
 
 
 class Message(models.Model):

@@ -14,6 +14,7 @@
             @blur="$v.name.$touch()"
           ></v-text-field>
           <v-text-field
+            v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min]"
             :type="show1 ? 'text' : 'password'"
@@ -25,7 +26,6 @@
           <v-btn
             class="mr-4"
             @click="submit"
-            v-on:click="$router.push('Home');"
           >
             Войти
           </v-btn>
@@ -41,6 +41,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, email } from 'vuelidate/lib/validators'
+import server from '@/server'
 
 export default {
   mixins: [validationMixin],
@@ -58,15 +59,7 @@ export default {
 
   data: () => ({
     name: '',
-    email: '',
-    select: null,
-    items: [
-      'Item 1',
-      'Item 2',
-      'Item 3',
-      'Item 4'
-    ],
-    checkbox: false,
+    password: '',
     show1: false,
     rules: {
       required: value => !!value || 'Необходимо заполнить',
@@ -92,8 +85,32 @@ export default {
   methods: {
     submit () {
       this.$v.$touch()
+      this.login()
       // TODO: - http://127.0.0.1:8000/auth/token/login/
       // username, password
+    },
+    async login () {
+      const data = new FormData()
+      data.set('username', this.name)
+      data.set('password', this.password)
+      const config = {
+        header: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      this.axios
+        .post(server + 'auth/token/login/', data, config)
+        .then(response => {
+          this.info = response
+          console.log(this.info, response.data.auth_token)
+          if (response.status === 200 && response.data.auth_token) {
+            localStorage.setItem('user-token', response.data.auth_token)
+            this.$router.push('Home')
+          }
+        })
+        .catch(e => {
+          console.error('AN API ERROR', e)
+        })
     },
     clear () {
       this.$v.$reset()
