@@ -86,8 +86,6 @@ export default {
     submit () {
       this.$v.$touch()
       this.login()
-      // TODO: - http://127.0.0.1:8000/auth/token/login/
-      // username, password
     },
     async login () {
       const data = new FormData()
@@ -102,7 +100,6 @@ export default {
         .post(server + 'auth/token/login/', data, config)
         .then(response => {
           this.info = response
-          console.log(this.info, response.data.auth_token)
           if (response.status === 200 && response.data.auth_token) {
             localStorage.setItem('user-token', response.data.auth_token)
             this.$router.push('Home')

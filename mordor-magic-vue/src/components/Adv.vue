@@ -6,18 +6,18 @@
         <v-sheet rounded="lg">
           <v-list color="transparent">
             <v-list-item
-              v-for="advItem in advList"
-              :key = advItem
+              v-for="item, index in advList"
+              :key = index
             >
               <v-list-item-content>
                 <v-list-item-title>
-                  {{ advItem.title }}
+                  {{ index.title }}
                 </v-list-item-title>
                 <v-list-item-subtitle>
-                {{ advItem.text }}
+                {{ index.text }}
                 </v-list-item-subtitle>
                 <v-list-item-subtitle>
-                {{ advItem.date }}
+                {{ index.date }}
                 </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
@@ -56,7 +56,6 @@ export default {
           .get(apiUrl + 'users/')
           .then(response => {
             this.info = response
-            console.log(this.info)
           })
       } catch (e) {
         console.error('AN API ERROR', e)
@@ -64,7 +63,6 @@ export default {
     }
   },
   created () {
-    this.getUsers()
   }
 }
 </script>

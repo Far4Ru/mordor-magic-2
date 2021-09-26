@@ -81,9 +81,7 @@
             >
               <members v-show="page == 'members'"/>
               <characters v-show="page == 'characters'"/>
-              <adv v-show="page == 'adv'"/>
               <events v-show="page == 'events'"/>
-              <messages v-show="page == 'messages'"/>
               <profile v-show="page == 'profile'"/>
               <settings v-show="page == 'settings'"/>
               <tasks v-show="page == 'tasks'"/>
@@ -100,12 +98,11 @@
 import AvatarMenu from '@/components/AvatarMenu'
 import Members from '@/components/Members'
 import Characters from '@/components/Characters'
-import Adv from '@/components/Adv'
 import Events from '@/components/Events'
-import Messages from '@/components/Messages'
 import Profile from '@/components/Profile'
 import Settings from '@/components/Settings'
 import Tasks from '@/components/Tasks'
+import server from '@/server'
 export default {
   name: 'App',
   data: () => ({
@@ -123,16 +120,16 @@ export default {
       Персонажи: 'characters'
       // 'Мои задачи': 'tasks'
       // 'Закладки'
-    }
+    },
+    page: 'profile',
+    leftPanel: true
   }),
-  props: ['page', 'leftPanel'],
+  props: [],
   components: {
     AvatarMenu,
     Members,
     Characters,
-    Adv,
     Events,
-    Messages,
     Profile,
     Settings,
     Tasks
@@ -140,14 +137,24 @@ export default {
   methods: {
     changePage (name) {
       this.page = name
+    },
+    async checkToken () {
+      // https://blog.sqreen.com/authentication-best-practices-vue/
+      this.axios.defaults.headers.common.Authorization = 'Token ' + localStorage.getItem('user-token')
+      this.axios
+        .get(server + 'auth/users/me/')
+        .then(response => {
+          this.info = response
+          if (response.status !== 200) this.$router.push('/')
+        })
+        .catch(e => {
+          console.error('AN API ERROR', e)
+          this.$router.push('/')
+        })
     }
   },
   created () {
-    this.page = 'profile'
-    this.leftPanel = true
-    // TODO: - http://127.0.0.1:8000/auth/users/me
-    // https://blog.sqreen.com/authentication-best-practices-vue/
-    // console.log(localStorage.getItem('user-token'))
+    this.checkToken()
   }
 }
 </script>

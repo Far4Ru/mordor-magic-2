@@ -106,8 +106,6 @@ export default {
     submit () {
       this.$v.$touch()
       this.register()
-      // TODO: - http://127.0.0.1:8000/auth/users/
-      // username, password, email
     },
     async register () {
       const data = new FormData()
@@ -123,7 +121,6 @@ export default {
         .post(server + 'auth/users/', data, config)
         .then(response => {
           this.info = response
-          console.log(this.info, response.data.auth_token)
           if (response.status === 201) {
             this.changeToLogin()
           }
