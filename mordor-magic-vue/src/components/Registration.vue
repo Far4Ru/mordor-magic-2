@@ -112,6 +112,7 @@ export default {
       data.set('username', this.name)
       data.set('email', this.email)
       data.set('password', this.password)
+      this.axios.defaults.headers.common.Authorization = null
       const config = {
         header: {
           'Content-Type': 'multipart/form-data'

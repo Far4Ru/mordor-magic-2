@@ -18,7 +18,7 @@ export default {
     info: ''
   }),
   methods: {
-    async getUsers () {
+    async getEvents () {
       try {
         this.axios
           .get(apiUrl + 'users/')

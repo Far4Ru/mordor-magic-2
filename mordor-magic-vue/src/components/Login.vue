@@ -100,8 +100,8 @@ export default {
       this.axios
         .post(server + 'auth/token/login/', data, config)
         .then(response => {
-          this.info = response
           if (response.status === 200 && response.data.auth_token) {
+            localStorage.setItem('username', this.name)
             localStorage.setItem('user-token', response.data.auth_token)
             this.$router.push('Home')
           }
@@ -122,8 +122,6 @@ export default {
     clear () {
       this.$v.$reset()
       this.name = ''
-      this.select = null
-      this.checkbox = false
     },
     changeToRegistration () {
       this.$emit('changeLoginPage', false)

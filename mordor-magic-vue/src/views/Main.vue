@@ -84,7 +84,6 @@
               <events v-show="page == 'events'"/>
               <profile v-show="page == 'profile'"/>
               <settings v-show="page == 'settings'"/>
-              <tasks v-show="page == 'tasks'"/>
             </v-sheet>
           </v-col>
         </v-row>
@@ -101,7 +100,6 @@ import Characters from '@/components/Characters'
 import Events from '@/components/Events'
 import Profile from '@/components/Profile'
 import Settings from '@/components/Settings'
-import Tasks from '@/components/Tasks'
 import server from '@/server'
 export default {
   name: 'App',
@@ -131,8 +129,7 @@ export default {
     Characters,
     Events,
     Profile,
-    Settings,
-    Tasks
+    Settings
   },
   methods: {
     changePage (name, showLeft = true) {
