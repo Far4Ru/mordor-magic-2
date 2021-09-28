@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from .models import User
-from .serializers import UserSerializer, UserCreateSerializer
+from .serializers import UserSerializer, UserCreateSerializer, MembersSerializer
 from rest_framework.response import Response
 from rest_framework import generics
 from django.contrib.auth import authenticate, login,logout
@@ -17,6 +17,12 @@ class UserCreateAPIView(generics.CreateAPIView):
 class UserListAPIView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+
+class MembersListAPIView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = MembersSerializer
     queryset = User.objects.all()
 
 

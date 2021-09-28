@@ -8,6 +8,12 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['last_login', 'username', 'first_name', 'last_name', 'nickname', 'role']
 
 
+class MembersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['last_login', 'id', 'nickname', 'role']
+
+
 class UserCreateSerializer(serializers.Serializer):
     nickname = serializers.CharField()
 

@@ -2,15 +2,15 @@
   <section>
     <v-row>
       <v-col cols="6" class="mx-auto">
-        Профиль
-        {{ changedFirstName }}
+        <h2>Профиль</h2>
+        <div>{{ changedFirstName }}</div>
       </v-col>
     </v-row>
   </section>
 </template>
 
 <script>
-const apiUrl = 'http://127.0.0.1:8000/api/'
+import server from '@/server'
 
 export default {
   components: { },
@@ -35,7 +35,7 @@ export default {
       try {
         this.axios.defaults.headers.common.Authorization = 'Token ' + localStorage.getItem('user-token')
         this.axios
-          .get(apiUrl + 'users/user', { params: { username: this.username } })
+          .get(server + 'users/user', { params: { username: this.username } })
           .then(response => {
             if (response.status === 200) {
               this.changedFirstName = response.data[0].first_name

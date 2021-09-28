@@ -2,7 +2,7 @@
   <section>
     <v-row>
       <v-col cols="6" class="mx-auto">
-        Настройки
+        <h2>Настройки</h2>
       </v-col>
     </v-row>
   </section>
