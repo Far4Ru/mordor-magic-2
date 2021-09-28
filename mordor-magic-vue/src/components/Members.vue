@@ -5,13 +5,47 @@
         <h2>Участники</h2>
         <v-data-table
             :headers="headers"
-            :items="desserts"
+            :items="changedUserList"
             class="elevation-1"
+            @click:row="toUserInfo"
           >
             <template v-slot:header.name="{ header }">
               {{ header.text.toUpperCase() }}
             </template>
           </v-data-table>
+          <v-dialog
+            v-model="dialog"
+            max-width="500px"
+          >
+            <v-card>
+              <v-card-title>
+                Участник
+              </v-card-title>
+              <v-card-text>
+                <!-- <v-btn
+                  color="primary"
+                  dark
+                  @click=""
+                >
+                  Открыть
+                </v-btn> -->
+                <v-select
+                  :items="roles"
+                  label="Роль"
+                  item-value="text"
+                ></v-select>
+              </v-card-text>
+              <v-card-actions>
+                <v-btn
+                  color="primary"
+                  text
+                  @click="dialog = false"
+                >
+                  Назад
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
       </v-col>
     </v-row>
   </section>
@@ -25,109 +59,60 @@ export default {
   name: 'Members',
   data: () => ({
     info: '',
+    dialog: false,
+    roles: [
+      { text: 'Зам. главы' },
+      { text: 'Офицер' },
+      { text: 'Элита' },
+      { text: 'Участник' }
+    ],
     headers: [
       {
-        text: 'Dessert (100g serving)',
+        text: 'Никнейм',
         align: 'start',
-        value: 'name'
+        value: 'nickname'
       },
-      { text: 'Calories', value: 'calories' },
-      { text: 'Fat (g)', value: 'fat' },
-      { text: 'Carbs (g)', value: 'carbs' },
-      { text: 'Protein (g)', value: 'protein' },
-      { text: 'Iron (%)', value: 'iron' }
+      { text: 'Роль', value: 'role' },
+      { text: 'Онлайн', value: 'last_login' }
     ],
-    desserts: [
-      {
-        name: 'Frozen Yogurt',
-        calories: 159,
-        fat: 6.0,
-        carbs: 24,
-        protein: 4.0,
-        iron: '1%'
-      },
-      {
-        name: 'Ice cream sandwich',
-        calories: 237,
-        fat: 9.0,
-        carbs: 37,
-        protein: 4.3,
-        iron: '1%'
-      },
-      {
-        name: 'Eclair',
-        calories: 262,
-        fat: 16.0,
-        carbs: 23,
-        protein: 6.0,
-        iron: '7%'
-      },
-      {
-        name: 'Cupcake',
-        calories: 305,
-        fat: 3.7,
-        carbs: 67,
-        protein: 4.3,
-        iron: '8%'
-      },
-      {
-        name: 'Gingerbread',
-        calories: 356,
-        fat: 16.0,
-        carbs: 49,
-        protein: 3.9,
-        iron: '16%'
-      },
-      {
-        name: 'Jelly bean',
-        calories: 375,
-        fat: 0.0,
-        carbs: 94,
-        protein: 0.0,
-        iron: '0%'
-      },
-      {
-        name: 'Lollipop',
-        calories: 392,
-        fat: 0.2,
-        carbs: 98,
-        protein: 0,
-        iron: '2%'
-      },
-      {
-        name: 'Honeycomb',
-        calories: 408,
-        fat: 3.2,
-        carbs: 87,
-        protein: 6.5,
-        iron: '45%'
-      },
-      {
-        name: 'Donut',
-        calories: 452,
-        fat: 25.0,
-        carbs: 51,
-        protein: 4.9,
-        iron: '22%'
-      },
-      {
-        name: 'KitKat',
-        calories: 518,
-        fat: 26.0,
-        carbs: 65,
-        protein: 7,
-        iron: '6%'
-      }
-    ]
+    userList: []
   }),
+  computed: {
+    changedUserList: {
+      get: function () {
+        return this.userList
+      },
+      set: function (list) {
+        this.userList = list
+        return this.userList
+      }
+    }
+  },
   methods: {
     async getMembers () {
       try {
         this.axios
           .get(server + 'users/')
           .then(response => {
-            this.info = response
-            console.log(this.info)
+            this.changedUserList = response.data
+          })
+      } catch (e) {
+        console.error('AN API ERROR', e)
+      }
+    },
+    toUserInfo (userData) {
+      this.dialog = true
+      console.log(userData.id)
+    },
+    async getInfo (id) {
+      try {
+        this.axios.defaults.headers.common.Authorization = 'Token ' + localStorage.getItem('user-token')
+        this.axios
+          .get(server + 'users/user', { params: { id: id } })
+          .then(response => {
+            if (response.status === 200) {
+              this.changedFirstName = response.data[0].first_name
+            }
           })
       } catch (e) {
         console.error('AN API ERROR', e)

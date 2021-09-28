@@ -130,6 +130,11 @@
                 </v-dialog>
               </v-toolbar>
             </template>
+            <template v-slot:item.protein="{ item }">
+              <v-simple-checkbox
+                v-model="item.protein"
+              ></v-simple-checkbox>
+            </template>
             <template v-slot:item.actions="{ item }">
               <v-icon
                 small
@@ -172,16 +177,15 @@ export default {
     dialogDelete: false,
     headers: [
       {
-        text: 'Dessert (100g serving)',
+        text: 'Никнейм',
         align: 'start',
-        sortable: false,
+        sortable: true,
         value: 'name'
       },
-      { text: 'Calories', value: 'calories' },
-      { text: 'Fat (g)', value: 'fat' },
-      { text: 'Carbs (g)', value: 'carbs' },
-      { text: 'Protein (g)', value: 'protein' },
-      { text: 'Actions', value: 'actions', sortable: false }
+      { text: 'Дозор', value: 'protein' },
+      { text: 'Жертва богам', value: 'fat' },
+      { text: 'Задание наемника', value: 'carbs' },
+      { text: 'Действия', value: 'actions', sortable: false }
     ],
     desserts: [],
     editedIndex: -1,

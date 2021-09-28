@@ -42,23 +42,23 @@ export default {
     years: [
       {
         color: 'cyan',
-        year: '1960'
+        year: '12:00'
       },
       {
         color: 'green',
-        year: '1970'
+        year: '15:00'
       },
       {
         color: 'pink',
-        year: '1980'
+        year: '19:30'
       },
       {
         color: 'amber',
-        year: '1990'
+        year: '20:00'
       },
       {
         color: 'orange',
-        year: '2000'
+        year: '21:00'
       }
     ]
   }),
