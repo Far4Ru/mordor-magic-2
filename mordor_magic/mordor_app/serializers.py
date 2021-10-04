@@ -21,3 +21,20 @@ class UserCreateSerializer(serializers.Serializer):
         user = User(**validated_data)
         user.save()
         return User(**validated_data)
+
+# TODO: - профиль
+# Никнейм
+# Имя
+# Количество персонажей
+# Количество выполненных событий
+# Роль
+# Почта
+
+# TODO: - персонажи
+# персонаж
+#   список ивентов
+
+# TODO: - события
+# имя
+# описание
+# период
