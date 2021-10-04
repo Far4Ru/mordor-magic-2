@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework.views import APIView
 from .models import User
@@ -41,3 +42,16 @@ class UserAPIView(generics.ListAPIView):
                 queryset = self.model.objects.none()
             return queryset
         return self.model.objects.none()
+
+
+class UserView(APIView):
+    def get_object(self, pk):
+        return User.objects.get(pk=pk)
+
+    def patch(self, request, pk):
+        user = self.get_object(pk)
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({'code': '201', 'data': serializer.data})
+        return JsonResponse({'code': '400', 'data': "wrong parameters"})

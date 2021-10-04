@@ -6,7 +6,7 @@
         <template>
           <v-data-table
             :headers="headers"
-            :items="desserts"
+            :items="characterList"
             sort-by="calories"
             class="elevation-1"
           >
@@ -14,12 +14,6 @@
               <v-toolbar
                 flat
               >
-                <v-toolbar-title>My CRUD</v-toolbar-title>
-                <v-divider
-                  class="mx-4"
-                  inset
-                  vertical
-                ></v-divider>
                 <v-spacer></v-spacer>
                 <v-dialog
                   v-model="dialog"
@@ -33,7 +27,7 @@
                       v-bind="attrs"
                       v-on="on"
                     >
-                      New Item
+                      Персонаж
                     </v-btn>
                   </template>
                   <v-card>
@@ -43,58 +37,10 @@
 
                     <v-card-text>
                       <v-container>
-                        <v-row>
-                          <v-col
-                            cols="12"
-                            sm="6"
-                            md="4"
-                          >
-                            <v-text-field
-                              v-model="editedItem.name"
-                              label="Dessert name"
-                            ></v-text-field>
-                          </v-col>
-                          <v-col
-                            cols="12"
-                            sm="6"
-                            md="4"
-                          >
-                            <v-text-field
-                              v-model="editedItem.calories"
-                              label="Calories"
-                            ></v-text-field>
-                          </v-col>
-                          <v-col
-                            cols="12"
-                            sm="6"
-                            md="4"
-                          >
-                            <v-text-field
-                              v-model="editedItem.fat"
-                              label="Fat (g)"
-                            ></v-text-field>
-                          </v-col>
-                          <v-col
-                            cols="12"
-                            sm="6"
-                            md="4"
-                          >
-                            <v-text-field
-                              v-model="editedItem.carbs"
-                              label="Carbs (g)"
-                            ></v-text-field>
-                          </v-col>
-                          <v-col
-                            cols="12"
-                            sm="6"
-                            md="4"
-                          >
-                            <v-text-field
-                              v-model="editedItem.protein"
-                              label="Protein (g)"
-                            ></v-text-field>
-                          </v-col>
-                        </v-row>
+                        <v-text-field
+                          v-model="editedItem.name"
+                          label="Имя персонажа"
+                        ></v-text-field>
                       </v-container>
                     </v-card-text>
 
@@ -130,9 +76,9 @@
                 </v-dialog>
               </v-toolbar>
             </template>
-            <template v-slot:item.protein="{ item }">
+            <template v-slot:item.Дозор="{ item }">
               <v-simple-checkbox
-                v-model="item.protein"
+                v-model="item.Дозор"
               ></v-simple-checkbox>
             </template>
             <template v-slot:item.actions="{ item }">
@@ -153,9 +99,9 @@
             <template v-slot:no-data>
               <v-btn
                 color="primary"
-                @click="initialize"
+                @click="getCharacters"
               >
-                Reset
+                Обновить
               </v-btn>
             </template>
           </v-data-table>
@@ -182,12 +128,12 @@ export default {
         sortable: true,
         value: 'name'
       },
-      { text: 'Дозор', value: 'protein' },
-      { text: 'Жертва богам', value: 'fat' },
-      { text: 'Задание наемника', value: 'carbs' },
+      { text: 'Дозор', value: 'Дозор' },
+      { text: 'Жертва богам', value: 'Жертва богам' },
+      { text: 'Задание наемника', value: 'Задание наемника' },
       { text: 'Действия', value: 'actions', sortable: false }
     ],
-    desserts: [],
+    characterList: [],
     editedIndex: -1,
     editedItem: {
       name: '',
@@ -206,111 +152,24 @@ export default {
   }),
   computed: {
     formTitle () {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+      return this.editedIndex === -1 ? 'Новый' : 'Edit Item'
     }
   },
   methods: {
-    async getCharacters () {
-      try {
-        this.axios
-          .get(apiUrl + 'users/')
-          .then(response => {
-            this.info = response
-            console.log(this.info)
-          })
-      } catch (e) {
-        console.error('AN API ERROR', e)
-      }
-    },
-    initialize () {
-      this.desserts = [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0
-        },
-        {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7
-        }
-      ]
-    },
-
     editItem (item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.characterList.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
     deleteItem (item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.characterList.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
 
     deleteItemConfirm () {
-      this.desserts.splice(this.editedIndex, 1)
+      this.characterList.splice(this.editedIndex, 1)
       this.closeDelete()
     },
 
@@ -332,11 +191,24 @@ export default {
 
     save () {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
+        Object.assign(this.characterList[this.editedIndex], this.editedItem)
       } else {
-        this.desserts.push(this.editedItem)
+        this.characterList.push(this.editedItem)
       }
       this.close()
+    },
+    getCharacters () {
+      console.log(apiUrl)
+      this.characterList = [
+        {
+          name: 'Фарару',
+          Дозор: true,
+          'Задание наемника': true
+        },
+        {
+          name: 'Фарфик'
+        }
+      ]
     }
   },
   watch: {
@@ -348,7 +220,7 @@ export default {
     }
   },
   created () {
-    this.initialize()
+    this.getCharacters()
   }
 }
 </script>

@@ -3,6 +3,19 @@
     <v-row>
       <v-col cols="6" class="mx-auto">
         <h2>События</h2>
+        <v-expansion-panels>
+          <v-expansion-panel>
+            <v-expansion-panel-header>
+              Ежедневные
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-checkbox
+                v-model="checkbox"
+                :label="`Checkbox 1: ${checkbox.toString()}`"
+              ></v-checkbox>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
         <v-timeline>
             <v-timeline-item
               v-for="(year, i) in years"
@@ -60,7 +73,8 @@ export default {
         color: 'orange',
         year: '21:00'
       }
-    ]
+    ],
+    checkbox: true
   }),
   methods: {
     async getEvents () {

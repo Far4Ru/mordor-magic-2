@@ -29,19 +29,44 @@
                 >
                   Открыть
                 </v-btn> -->
+                <div>
+                  Фарару
+                </div>
+                <div>
+                  Количество персонажей
+                </div>
                 <v-select
                   :items="roles"
                   label="Роль"
                   item-value="text"
+                  v-show="admin"
                 ></v-select>
               </v-card-text>
               <v-card-actions>
                 <v-btn
+                  color="red"
+                  text
+                  @click="dialog = false"
+                  v-show="admin"
+                >
+                  Исключить
+                </v-btn>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="green"
+                  text
+                  @click="dialog = false"
+                  v-show="admin"
+                >
+                  Сохранить
+                </v-btn>
+                <v-btn
                   color="primary"
                   text
                   @click="dialog = false"
+                  v-show="!admin"
                 >
-                  Назад
+                  ОК
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -60,6 +85,7 @@ export default {
   data: () => ({
     info: '',
     dialog: false,
+    admin: false,
     roles: [
       { text: 'Зам. главы' },
       { text: 'Офицер' },
@@ -84,6 +110,9 @@ export default {
       },
       set: function (list) {
         this.userList = list
+        list.forEach((elem) => {
+          elem.last_login = this.dateISOtoPastTime(elem.last_login)
+        })
         return this.userList
       }
     }
@@ -116,6 +145,32 @@ export default {
           })
       } catch (e) {
         console.error('AN API ERROR', e)
+      }
+    },
+    dateISOtoPastTime (datetime) {
+      const date = new Date(datetime)
+      const nowDate = new Date()
+      if (date.getFullYear() >= nowDate.getFullYear()) {
+        if (date.getMonth() >= nowDate.getMonth()) {
+          if (date.getDate() >= nowDate.getDate()) {
+            if (date.getHours() >= nowDate.getHours()) {
+              if (date.getMinutes() >= nowDate.getMinutes()) {
+                return 'Онлайн'
+              } else {
+                return (nowDate.getMinutes() - date.getMinutes()) + ' мин. назад'
+              }
+            } else {
+              return (nowDate.getHours() - date.getHours()) + ' ч. назад'
+            }
+          } else {
+            return date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear()
+          }
+        } else {
+          return date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear()
+        }
+      } else {
+        if (date.getFullYear() === 1970) return 'Не входил'
+        return date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear()
       }
     }
   },

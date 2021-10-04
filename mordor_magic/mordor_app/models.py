@@ -12,7 +12,7 @@ class User(AbstractUser):
         ('5', 'Участник'),
     )
     nickname = models.CharField(max_length=30, null=True)
-    role = models.CharField(choices=roles, max_length=1, null=True)
+    role = models.CharField(choices=roles, max_length=1, null=True, default='5')
     registration_status = models.BooleanField(null=True)
     user_online_date = models.DateField(null=True)
 
