@@ -1,17 +1,23 @@
+from django.db import transaction
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import User
-from .serializers import UserSerializer, UserCreateSerializer, MembersSerializer
+from .models import User, Character
+from .serializers import UserSerializer, MembersSerializer, CharacterCreateSerializer, CharacterSerializer
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 
 
-@permission_classes([IsAuthenticated])
-class UserCreateAPIView(generics.CreateAPIView):
-    serializer_class = UserCreateSerializer
-    queryset = User.objects.all()
+# @permission_classes([IsAuthenticated])
+class CharacterCreateAPIView(generics.CreateAPIView):
+    serializer_class = CharacterCreateSerializer
+    queryset = Character.objects.all()
+
+
+class CharacterListAPIView(generics.ListAPIView):
+    serializer_class = CharacterSerializer
+    queryset = Character.objects.all()
 
 
 @permission_classes([IsAuthenticated])

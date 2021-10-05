@@ -35,7 +35,7 @@ export default {
       try {
         this.axios.defaults.headers.common.Authorization = 'Token ' + localStorage.getItem('user-token')
         this.axios
-          .get(server + 'users/user', { params: { username: this.username } })
+          .get(server + 'user/', { params: { username: this.username } })
           .then(response => {
             if (response.status === 200) {
               this.changedFirstName = response.data[0].first_name

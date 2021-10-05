@@ -127,7 +127,7 @@ export default {
           }
         }
         this.axios
-          .patch(apiUrl + 'users/me/' + this.id + '/', data, config)
+          .patch(apiUrl + 'user/' + this.id + '/', data, config)
           .then(response => {
             if (response.status === 204) {
               // success
@@ -141,7 +141,7 @@ export default {
       try {
         this.axios.defaults.headers.common.Authorization = 'Token ' + localStorage.getItem('user-token')
         this.axios
-          .get(apiUrl + 'users/user', { params: { username: this.username } })
+          .get(apiUrl + 'user/', { params: { username: this.username } })
           .then(response => {
             if (response.status === 200) {
               this.first_name = response.data[0].first_name
