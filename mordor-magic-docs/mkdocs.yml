@@ -1,5 +1,7 @@
 site_name: Mordor Magic
-site_url: https://example.com/
+site_url: ""
+use_directory_urls: false
+plugins: []
 nav:
   - Главная: index.md
   - API: api.md

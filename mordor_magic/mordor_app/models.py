@@ -11,7 +11,7 @@ class User(AbstractUser):
         ('4', 'Элита'),
         ('5', 'Участник'),
     )
-    nickname = models.CharField(max_length=30, null=True)
+    nickname = models.CharField(max_length=30, null=True, unique=True)
     role = models.CharField(choices=roles, max_length=1, null=True, default='5')
     registration_status = models.BooleanField(null=True)
     user_online_date = models.DateField(null=True)
@@ -23,7 +23,7 @@ class Character(models.Model):
         ('2', 'Твин'),
         ('3', 'Репутация')
     )
-    nickname = models.CharField(max_length=30)
+    nickname = models.CharField(max_length=30, unique=True)
     email = models.CharField(max_length=45)
     type = models.CharField(choices=types, max_length=1, null=True, default='2')
 
@@ -39,7 +39,7 @@ class Event(models.Model):
         ('w', 'week'),
         ('m', 'month')
     )
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30, unique=True)
     description = models.CharField(max_length=255)
     period = models.CharField(choices=periods, max_length=1)
     start_date = models.DateField(null=True)
