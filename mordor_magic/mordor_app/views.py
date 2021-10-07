@@ -2,7 +2,7 @@ from django.db import transaction
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import User, Character
-from .serializers import UserSerializer, MembersSerializer, CharacterCreateSerializer, CharacterSerializer
+from .serializers import *
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework import status
@@ -20,19 +20,13 @@ class CharacterListAPIView(generics.ListAPIView):
     queryset = Character.objects.all()
 
 
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 class UserListAPIView(generics.ListAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
 
-@permission_classes([IsAuthenticated])
-class MembersListAPIView(generics.ListAPIView):
-    serializer_class = MembersSerializer
-    queryset = User.objects.all()
-
-
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 class UserAPIView(generics.ListAPIView):
     model = User
     serializer_class = UserSerializer
@@ -51,8 +45,8 @@ class UserAPIView(generics.ListAPIView):
         return self.model.objects.none()
 
 
-@permission_classes([IsAuthenticated])
-class UserView(APIView):
+# @permission_classes([IsAuthenticated])
+class UserUpdateAPIView(APIView):
     @staticmethod
     def get_object(pk):
         return User.objects.get(pk=pk)
@@ -66,3 +60,35 @@ class UserView(APIView):
         return Response(status=status.HTTP_400_BAD_REQUEST, data="wrong parameters")
 
 # [IsAdminUser]
+
+
+class UserCharactersAPIView(generics.ListAPIView):
+    serializer_class = UserCharactersSerializer
+    queryset = User.objects.all()
+
+    def get_queryset(self):
+        username = self.request.GET.get('username')
+        if username:
+            try:
+                queryset = self.queryset.filter(username=username)
+                # User.objects.filter(username=username)
+            except ValueError:
+                queryset = self.User.objects.none()
+            return queryset
+        return self.User.objects.none()
+
+
+class CharacterEventsAPIView(generics.ListAPIView):
+    serializer_class = CharacterEventsSerializer
+    queryset = Character.objects.all()
+
+    def get_queryset(self):
+        nickname = self.request.GET.get('nickname')
+        if nickname:
+            try:
+                queryset = self.queryset.filter(nickname=nickname)
+                # User.objects.filter(username=username)
+            except ValueError:
+                queryset = self.Character.objects.none()
+            return queryset
+        return self.Character.objects.none()

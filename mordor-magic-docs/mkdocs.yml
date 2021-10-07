@@ -1,0 +1,6 @@
+site_name: Mordor Magic
+site_url: https://example.com/
+nav:
+  - Главная: index.md
+  - API: api.md
+theme: readthedocs

@@ -29,8 +29,8 @@ class Character(models.Model):
 
 
 class CharacterOwner(models.Model):
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='character_user', on_delete=models.CASCADE)
+    character = models.ForeignKey(Character, related_name='user_characters', on_delete=models.CASCADE)
 
 
 class Event(models.Model):
@@ -43,13 +43,13 @@ class Event(models.Model):
     description = models.CharField(max_length=255)
     period = models.CharField(choices=periods, max_length=1)
     start_date = models.DateField(null=True)
-    start_time = models.DateField(null=True)
-    end_time = models.DateField(null=True)
+    start_time = models.TimeField(null=True)
+    end_time = models.TimeField(null=True)
     max_value = models.IntegerField(null=True)
 
 
 class CharacterEvent(models.Model):
-    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    character = models.ForeignKey(Character, related_name='character_events', on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True)
     status = models.BooleanField()
     date = models.DateField()
