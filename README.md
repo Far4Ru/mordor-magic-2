@@ -11,7 +11,7 @@
 ## Frontend
 > Vue.js
 
-    Vuetify
+* Vuetify
 
 ## Docs
 > MkDocs
