@@ -3,10 +3,10 @@
 ## Backend
 > Django
 
-    * rest_framework
-    * corsheaders
-    * djoser
-    * rest_framework.authtoken
+* rest_framework
+* corsheaders
+* djoser
+* rest_framework.authtoken
 
 ## Frontend
 > Vue.js
