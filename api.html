@@ -109,7 +109,7 @@
 <tr>
 <td><code>GET</code></td>
 <td></td>
-<td><code>HTTP_200_OK</code> <BR><BR><em> <code>{{ User.id }}</code><BR></em> <code>{{ User.nickname }}</code><BR><em> <code>{{ User.role }}</code><BR></em> <code>{{ User.user_online_date }}</code></td>
+<td><code>HTTP_200_OK</code> <ul><li><code>{{ User.id }}</code></li><li><code>{{ User.nickname }}</code></li><li><code>{{ User.role }}</code></li><li><code>{{ User.user_online_date }}</code></li></ul></td>
 </tr>
 </tbody>
 </table>
@@ -127,7 +127,7 @@
 <tr>
 <td><code>GET</code></td>
 <td></td>
-<td><code>HTTP_200_OK</code> <BR><BR>* <code>{{ User.id }}</code></td>
+<td><code>HTTP_200_OK</code> <ul><li><code>{{ User.id }}</code></li></ul></td>
 </tr>
 </tbody>
 </table>
@@ -146,7 +146,7 @@
 <tr>
 <td><code>GET</code></td>
 <td><code>date</code></td>
-<td><code>HTTP_200_OK</code><BR><BR> * <code>{{ Event.name }}</code><BR> * <code>{{ Event.description }}</code><BR> * <code>{{ Event.start_time }}</code><BR> * <code>{{ Event.end_time }}</code></td>
+<td><code>HTTP_200_OK</code><ul><li><code>{{ Event.name }}</code></li><li><code>{{ Event.description }}</code></li><li><code>{{ Event.start_time }}</code></li><li><code>{{ Event.end_time }}</code></li></ul></td>
 </tr>
 </tbody>
 </table>
