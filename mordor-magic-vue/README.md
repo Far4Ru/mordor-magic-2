@@ -1,24 +1,27 @@
-# mordor-magic-2
+# Mordor Magic
 
-## Project setup
+> **Node.js** Node.js 14.18.0
+
+## Yarn
+
+`npm install -g yarn`
+
+### Инициализация
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### Компиляция и перезагрузка для разработки
 ```
 yarn serve
 ```
 
-### Compiles and minifies for production
+### Сборка
 ```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
+yarn build
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Исправление
+```
+yarn lint
+```
