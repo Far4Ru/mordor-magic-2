@@ -53,6 +53,10 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#_2">Персонажи</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_3">События по дате</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_4">Остальное</a>
+    </li>
     </ul>
                     </li>
                 </ul>
@@ -91,44 +95,62 @@
               
                 <h1 id="api">API</h1>
 <h2 id="_1">Пользователи</h2>
-<p><strong>Default URL:</strong> <code>/users/</code></p>
+<p>Конечная точка для получения списка всех пользователей.</p>
+<p><strong>URL-адрес:</strong> <code>/api/users/</code></p>
 <table>
 <thead>
 <tr>
-<th>Method</th>
-<th>Request</th>
-<th>Response</th>
+<th>Метод</th>
+<th>Запрос</th>
+<th>Ответ</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>POST</code></td>
-<td><code>uid</code></td>
-<td><code>404</code></td>
+<td><code>GET</code></td>
+<td></td>
+<td><code>HTTP_200_OK</code> <BR><BR><em> <code>{{ User.id }}</code><BR></em> <code>{{ User.nickname }}</code><BR><em> <code>{{ User.role }}</code><BR></em> <code>{{ User.user_online_date }}</code></td>
 </tr>
 </tbody>
 </table>
 <h2 id="_2">Персонажи</h2>
+<p>Конечная точка для получения списка всех персонажей пользователя.</p>
 <table>
 <thead>
 <tr>
-<th>Method</th>
-<th>Request</th>
-<th>Response</th>
+<th>Метод</th>
+<th>Запрос</th>
+<th>Ответ</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>GET</td>
+<td><code>GET</code></td>
 <td></td>
-<td>asd<BR>sda<BR> * fgf<BR> * dfsdf</td>
+<td><code>HTTP_200_OK</code> <BR><BR>* <code>{{ User.id }}</code></td>
 </tr>
 </tbody>
 </table>
-<p>Список пользователей
-/users/
-get
-id, nickname, role, user_online_date</p>
+<h2 id="_3">События по дате</h2>
+<p>Конечная точка для получения событий по заданной дате.</p>
+<p><strong>URL-адрес:</strong> <code>/api/events/</code></p>
+<table>
+<thead>
+<tr>
+<th>Метод</th>
+<th>Запрос</th>
+<th>Ответ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>date</code></td>
+<td><code>HTTP_200_OK</code><BR><BR> * <code>{{ Event.name }}</code><BR> * <code>{{ Event.description }}</code><BR> * <code>{{ Event.start_time }}</code><BR> * <code>{{ Event.end_time }}</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_4">Остальное</h2>
 <p>Удалить пользователя
 @admin
 /user/delete/<id></p>
@@ -156,6 +178,13 @@ patch</p>
 <p>Добавить персонажу событие</p>
 <p>Изменить состояние события</p>
 <p>Список событий на сегодня</p>
+<p>Username
+150 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
+<p>Password
+Your password can’t be too similar to your other personal information.
+Your password must contain at least 8 characters.
+Your password can’t be a commonly used password.
+Your password can’t be entirely numeric.</p>
               
             </div>
           </div>
