@@ -1,6 +1,6 @@
 # Mordor Magic
 
-> **Node.js** Node.js 14.18.0
+> **Установка** <BR> `Node.js 14.18.0`
 
 ## Yarn
 

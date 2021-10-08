@@ -1,24 +1,34 @@
 # API
 
-
 ## Пользователи
 
-**Default URL:** `/users/`
+Конечная точка для получения списка всех пользователей.
 
-|  Method | Request  | Response | 
+**URL-адрес:** `/api/users/`
+
+|  Метод | Запрос  | Ответ | 
 |---|---|---|
-|  `POST` | `uid`  |  `404` |
+|  `GET` |   |  `HTTP_200_OK` <BR><BR>* `{{ User.id }}`<BR>* `{{ User.nickname }}`<BR>* `{{ User.role }}`<BR>* `{{ User.user_online_date }}`|
 
 ## Персонажи
 
-Method | Request | Response
---- | --- | ---
-GET |  | asd<BR>sda<BR> * fgf<BR> * dfsdf
+Конечная точка для получения списка всех персонажей пользователя.
 
-Список пользователей
-/users/
-get
-id, nickname, role, user_online_date
+|  Метод | Запрос  | Ответ | 
+|---|---|---|
+|  `GET` |   |  `HTTP_200_OK` <BR><BR>* `{{ User.id }}`|
+
+## События по дате
+
+Конечная точка для получения событий по заданной дате.
+
+**URL-адрес:** `/api/events/`
+
+|  Метод | Запрос  | Ответ | 
+|---|---|---|
+|  `GET` | `date`  |  `HTTP_200_OK`<BR><BR> * `{{ Event.name }}`<BR> * `{{ Event.description }}`<BR> * `{{ Event.start_time }}`<BR> * `{{ Event.end_time }}` |
+
+## Остальное
 
 Удалить пользователя
 @admin
