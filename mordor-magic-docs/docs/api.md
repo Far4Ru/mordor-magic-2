@@ -8,7 +8,7 @@
 
 |  Метод | Запрос  | Ответ | 
 |---|---|---|
-|  `GET` |   |  `HTTP_200_OK` <BR><BR>* `{{ User.id }}`<BR>* `{{ User.nickname }}`<BR>* `{{ User.role }}`<BR>* `{{ User.user_online_date }}`|
+|  `GET` |   |  `HTTP_200_OK` <ul><li>`{{ User.id }}`</li><li>`{{ User.nickname }}`</li><li>`{{ User.role }}`</li><li>`{{ User.user_online_date }}`</li></ul>|
 
 ## Персонажи
 
@@ -16,7 +16,7 @@
 
 |  Метод | Запрос  | Ответ | 
 |---|---|---|
-|  `GET` |   |  `HTTP_200_OK` <BR><BR>* `{{ User.id }}`|
+|  `GET` |   |  `HTTP_200_OK` <ul><li>`{{ User.id }}`</li></ul>|
 
 ## События по дате
 
@@ -26,7 +26,7 @@
 
 |  Метод | Запрос  | Ответ | 
 |---|---|---|
-|  `GET` | `date`  |  `HTTP_200_OK`<BR><BR> * `{{ Event.name }}`<BR> * `{{ Event.description }}`<BR> * `{{ Event.start_time }}`<BR> * `{{ Event.end_time }}` |
+|  `GET` | `date`  |  `HTTP_200_OK`<ul><li>`{{ Event.name }}`</li><li>`{{ Event.description }}`</li><li>`{{ Event.start_time }}`</li><li>`{{ Event.end_time }}`</li></ul>|
 
 ## Остальное
 
