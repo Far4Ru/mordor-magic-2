@@ -11,6 +11,7 @@ urlpatterns = [
     path('characters/', CharacterListAPIView.as_view()),
     path('characters/create/', CharacterCreateAPIView.as_view()),
     path('character/events/', CharacterEventsAPIView.as_view()),
+    path('character/events/count/', CharacterEventsCountAPIView.as_view()),
     # path('characters/update/'),
     # path('characters/delete/'),
     # path('events/'),

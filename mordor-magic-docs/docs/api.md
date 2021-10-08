@@ -58,3 +58,12 @@ patch
 
 Список событий на сегодня
 
+
+Username
+150 characters or fewer. Letters, digits and @/./+/-/_ only.
+
+Password
+Your password can’t be too similar to your other personal information.
+Your password must contain at least 8 characters.
+Your password can’t be a commonly used password.
+Your password can’t be entirely numeric.

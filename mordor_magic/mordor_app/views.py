@@ -92,3 +92,19 @@ class CharacterEventsAPIView(generics.ListAPIView):
                 queryset = self.Character.objects.none()
             return queryset
         return self.Character.objects.none()
+
+
+class CharacterEventsCountAPIView(generics.ListAPIView):
+    serializer_class = CharacterEventsCountSerializer
+    queryset = Character.objects.all()
+
+    def get_queryset(self):
+        nickname = self.request.GET.get('nickname')
+        if nickname:
+            try:
+                queryset = self.queryset.filter(nickname=nickname)
+                # User.objects.filter(username=username)
+            except ValueError:
+                queryset = self.Character.objects.none()
+            return queryset
+        return self.Character.objects.none()

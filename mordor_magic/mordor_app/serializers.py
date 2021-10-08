@@ -64,3 +64,17 @@ class CharacterEventsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Character
         fields = ['nickname', 'character_events']
+
+
+class CharacterEventsCountSerializer(serializers.ModelSerializer):
+    # character_events = CharacterEventSerializer(read_only=True, many=True)
+    character_events_count = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Character
+        fields = ['nickname', 'character_events_count']
+
+    @staticmethod
+    def get_character_events_count(obj):
+        complete = obj.character_events.all().filter(status=True)
+        return complete.count()
