@@ -8,33 +8,36 @@
             <v-expansion-panel-header>
               Ежедневные
             </v-expansion-panel-header>
-            <v-expansion-panel-content>
+            <v-expansion-panel-content
+              v-for="(event, i) in events"
+              :key="i"
+            >
               <v-checkbox
                 v-model="checkbox"
-                :label="`Checkbox 1: ${checkbox.toString()}`"
+                :label="`${event.name}`"
               ></v-checkbox>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
         <v-timeline>
             <v-timeline-item
-              v-for="(year, i) in years"
+              v-for="(event, i) in events"
               :key="i"
-              :color="year.color"
+              :color="event.color"
               small
             >
               <template v-slot:opposite>
                 <span
-                  :class="`headline font-weight-bold ${year.color}--text`"
-                  v-text="year.year"
+                  :class="`headline font-weight-bold ${event.color}--text`"
+                  v-text="`${event.start_time} - ${event.end_time}`"
                 ></span>
               </template>
               <div class="py-4">
-                <h2 :class="`headline font-weight-light mb-4 ${year.color}--text`">
-                  Lorem ipsum
+                <h2 :class="`headline font-weight-light mb-4 ${event.color}--text`">
+                  {{ event.name }}
                 </h2>
                 <div>
-                  Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus, vix an salutandi sententiae.
+                  {{ event.description }}
                 </div>
               </div>
             </v-timeline-item>
@@ -45,14 +48,14 @@
 </template>
 
 <script>
-const apiUrl = 'http://127.0.0.1:8000/api/'
+import server from '@/server'
 
 export default {
   components: { },
   name: 'Members',
   data: () => ({
     info: '',
-    years: [
+    events: [
       {
         color: 'cyan',
         year: '12:00'
@@ -80,10 +83,12 @@ export default {
     async getEvents () {
       try {
         this.axios
-          .get(apiUrl + 'users/')
+          // -> day
+          .get(server + 'events/')
           .then(response => {
-            this.info = response
-            console.log(this.info)
+            // events = response.data
+            this.events = response.data
+            console.log(this.events)
           })
       } catch (e) {
         console.error('AN API ERROR', e)
@@ -91,6 +96,7 @@ export default {
     }
   },
   created () {
+    this.getEvents()
   }
 }
 </script>

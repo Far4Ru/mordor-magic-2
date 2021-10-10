@@ -14,7 +14,7 @@ urlpatterns = [
     path('character/events/count/', CharacterEventsCountAPIView.as_view()),
     # path('characters/update/'),
     # path('characters/delete/'),
-    # path('events/'),
+    path('events/', EventListAPIView.as_view()),
     # path('events/create/'),
     # path('events/update/'),
     # path('events/delete/'),

@@ -3,9 +3,24 @@ from .models import *
 
 
 class UserSerializer(serializers.ModelSerializer):
+    role = serializers.CharField(source="get_role_display", read_only=True)
+
     class Meta:
         model = User
         fields = ['last_login', 'id', 'nickname', 'role']
+
+
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = '__all__'
+
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['id', 'nickname', 'first_name', 'last_name']
 
 
 class CharacterSerializer(serializers.ModelSerializer):

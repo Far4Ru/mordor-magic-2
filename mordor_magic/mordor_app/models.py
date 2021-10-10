@@ -46,6 +46,7 @@ class Event(models.Model):
     start_time = models.TimeField(null=True)
     end_time = models.TimeField(null=True)
     max_value = models.IntegerField(null=True)
+    color = models.CharField(max_length=30, null=True)
 
 
 class CharacterEvent(models.Model):

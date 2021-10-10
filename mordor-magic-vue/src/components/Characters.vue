@@ -27,7 +27,7 @@
                       v-bind="attrs"
                       v-on="on"
                     >
-                      Персонаж
+                      Добавить
                     </v-btn>
                   </template>
                   <v-card>
@@ -39,9 +39,63 @@
                       <v-container>
                         <v-text-field
                           v-model="editedItem.name"
-                          label="Имя персонажа"
+                          label="Никнейм персонажа"
                         ></v-text-field>
                       </v-container>
+                      <v-container>
+                        <v-text-field
+                          label="Эл. почта"
+                        ></v-text-field>
+                      </v-container>
+                      <v-container>
+                        <v-select
+                          :items="character_types"
+                          label="Тип"
+                          item-value="text"
+                        ></v-select>
+                      </v-container>
+                    </v-card-text>
+
+                    <v-card-text>
+                      <v-container>
+                        Ивенты персонажа
+                      </v-container>
+                      <v-chip
+                        v-if="chip1"
+                        class="ma-2"
+                        close
+                        @click:close="chip1 = false"
+                      >
+                        Дозор
+                      </v-chip>
+                      <v-chip
+                        v-if="chip1"
+                        class="ma-2"
+                        close
+                        @click:close="chip1 = false"
+                      >
+                        Задание наемника
+                      </v-chip>
+                    </v-card-text>
+
+                    <v-card-text>
+                      <v-container>
+                        Все ивенты
+                      </v-container>
+                      <v-chip
+                        v-if="chip1"
+                        class="ma-2"
+                        @click:close="chip1 = false"
+                      >
+                        Охота на элиту
+                      </v-chip>
+                      <v-chip
+                        v-if="chip1"
+                        class="ma-2"
+                        @click:close="chip1 = false"
+                      >
+                        Жертва
+                      </v-chip>
                     </v-card-text>
 
                     <v-card-actions>
@@ -51,26 +105,25 @@
                         text
                         @click="close"
                       >
-                        Cancel
+                        Отмена
                       </v-btn>
                       <v-btn
                         color="blue darken-1"
                         text
                         @click="save"
                       >
-                        Save
+                        Сохранить
                       </v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
                 <v-dialog v-model="dialogDelete" max-width="500px">
                   <v-card>
-                    <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+                    <v-card-title class="text-h5">Удалить персонажа?</v-card-title>
                     <v-card-actions>
+                      <v-btn color="blue darken-1" text @click="closeDelete">Отменить</v-btn>
                       <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-                      <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
-                      <v-spacer></v-spacer>
+                      <v-btn color="blue darken-1" text @click="deleteItemConfirm">Да</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
@@ -112,7 +165,7 @@
 </template>
 
 <script>
-const apiUrl = 'http://127.0.0.1:8000/api/'
+import server from '@/server'
 
 export default {
   components: { },
@@ -148,11 +201,17 @@ export default {
       fat: 0,
       carbs: 0,
       protein: 0
-    }
+    },
+    character_types: [
+      'Основа',
+      'Твин',
+      'Репутация'
+    ],
+    chip1: true
   }),
   computed: {
     formTitle () {
-      return this.editedIndex === -1 ? 'Новый' : 'Edit Item'
+      return this.editedIndex === -1 ? 'Новый персонаж' : 'Изменить персонажа'
     }
   },
   methods: {
@@ -198,12 +257,12 @@ export default {
       this.close()
     },
     getCharacters () {
-      console.log(apiUrl)
+      console.log(server)
       this.characterList = [
         {
           name: 'Фарару',
           Дозор: true,
-          'Задание наемника': true
+          'Задание наемника': 5
         },
         {
           name: 'Фарфик'

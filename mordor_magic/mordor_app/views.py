@@ -26,10 +26,15 @@ class UserListAPIView(generics.ListAPIView):
     queryset = User.objects.all()
 
 
+class EventListAPIView(generics.ListAPIView):
+    serializer_class = EventSerializer
+    queryset = Event.objects.all()
+
+
 # @permission_classes([IsAuthenticated])
 class UserAPIView(generics.ListAPIView):
     model = User
-    serializer_class = UserSerializer
+    serializer_class = UserUpdateSerializer
     queryset = model.objects.all()
 
     def get_queryset(self):
@@ -53,7 +58,7 @@ class UserUpdateAPIView(APIView):
 
     def patch(self, request, pk):
         user = self.get_object(pk)
-        serializer = UserSerializer(user, data=request.data, partial=True)
+        serializer = UserUpdateSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_201_CREATED, data=serializer.data)
