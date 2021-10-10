@@ -13,7 +13,7 @@
               :key="i"
             >
               <v-checkbox
-                v-model="checkbox"
+                v-model="event.visible"
                 :label="`${event.name}`"
               ></v-checkbox>
             </v-expansion-panel-content>
@@ -25,6 +25,7 @@
               :key="i"
               :color="event.color"
               small
+              v-show="event.visible"
             >
               <template v-slot:opposite>
                 <span
@@ -83,12 +84,10 @@ export default {
     async getEvents () {
       try {
         this.axios
-          // -> day
           .get(server + 'events/')
           .then(response => {
             // events = response.data
             this.events = response.data
-            console.log(this.events)
           })
       } catch (e) {
         console.error('AN API ERROR', e)

@@ -61,20 +61,15 @@
                         Ивенты персонажа
                       </v-container>
                       <v-chip
-                        v-if="chip1"
-                        class="ma-2"
+                        v-for="(event, i) in changedEvents"
                         close
-                        @click:close="chip1 = false"
-                      >
-                        Дозор
-                      </v-chip>
-                      <v-chip
-                        v-if="chip1"
+                        :key="i"
                         class="ma-2"
-                        close
-                        @click:close="chip1 = false"
+                        color="event.color"
+                        @click:close="event.character = false"
+                        v-show="event.character"
                       >
-                        Задание наемника
+                        {{ event.name }}
                       </v-chip>
                     </v-card-text>
 
@@ -83,18 +78,14 @@
                         Все ивенты
                       </v-container>
                       <v-chip
-                        v-if="chip1"
+                        v-for="(event, i) in changedEvents"
+                        :key="i"
                         class="ma-2"
-                        @click:close="chip1 = false"
+                        color="event.color"
+                        @click="event.character = true"
+                        v-show="!event.character"
                       >
-                        Охота на элиту
-                      </v-chip>
-                      <v-chip
-                        v-if="chip1"
-                        class="ma-2"
-                        @click:close="chip1 = false"
-                      >
-                        Жертва
+                        {{ event.name }}
                       </v-chip>
                     </v-card-text>
 
@@ -207,11 +198,40 @@ export default {
       'Твин',
       'Репутация'
     ],
-    chip1: true
+    chip1: true,
+    events: [
+      {
+        name: 'Охота на элиту',
+        color: 'primary',
+        character: true
+      },
+      {
+        name: 'Дозор',
+        color: 'red',
+        character: true
+      },
+      {
+        name: 'Подземелье',
+        color: 'green',
+        character: false
+      }
+    ]
   }),
   computed: {
     formTitle () {
       return this.editedIndex === -1 ? 'Новый персонаж' : 'Изменить персонажа'
+    },
+    changedEvents: {
+      get: function () {
+        return this.events
+      },
+      set: function (events) {
+        events.forEach((event) => {
+          event.character = false
+        })
+        this.events = events
+        return this.events
+      }
     }
   },
   methods: {
@@ -268,6 +288,19 @@ export default {
           name: 'Фарфик'
         }
       ]
+    },
+    getEvents () {
+      try {
+        this.axios
+          .get(server + 'events/')
+          .then(response => {
+            // events = response.data
+            this.changedEvents = response.data
+            console.log(this.events)
+          })
+      } catch (e) {
+        console.error('AN API ERROR', e)
+      }
     }
   },
   watch: {
@@ -280,6 +313,7 @@ export default {
   },
   created () {
     this.getCharacters()
+    this.getEvents()
   }
 }
 </script>

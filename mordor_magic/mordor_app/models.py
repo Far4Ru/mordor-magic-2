@@ -35,9 +35,9 @@ class CharacterOwner(models.Model):
 
 class Event(models.Model):
     periods = (
-        ('d', 'day'),
-        ('w', 'week'),
-        ('m', 'month')
+        ('d', 'Каждый день'),
+        ('w', 'Каждую неделю'),
+        ('m', 'Каждый месяц')
     )
     name = models.CharField(max_length=30, unique=True)
     description = models.CharField(max_length=255)
