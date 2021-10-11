@@ -59,7 +59,7 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#_5">Изменить пароль</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#_6">Изменить данные пользователя</a>
+    <li class="toctree-l2"><a class="reference internal" href="#_6">Данные пользователя</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#_7">Выход</a>
     </li>
@@ -67,7 +67,11 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#_9">События</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#_10">Прогресс</a>
+    <li class="toctree-l2"><a class="reference internal" href="#_10">Персонажи и пользователи</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_11">Персонажи и события</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_12">Прогресс</a>
     </li>
     </ul>
                     </li>
@@ -121,7 +125,7 @@
 <tr>
 <td><code>GET</code></td>
 <td></td>
-<td><code>HTTP_200_OK</code> <ul><li><code>id</code>, <code>nickname</code>, <code>role</code>, <code>user_online_date</code></li></ul></td>
+<td><code>HTTP_200_OK</code> <ul><li><code>last_login</code>, <code>nickname</code>, <code>role</code>, <code>first_name</code>, <code>registration_status</code>, <code>user_online_date</code>, <code>last_name</code>, <code>email</code></li></ul></td>
 </tr>
 </tbody>
 </table>
@@ -210,7 +214,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_6">Изменить данные пользователя</h2>
+<h2 id="_6">Данные пользователя</h2>
 <p><strong>URL-адрес:</strong> <code>/api/user/</code></p>
 <table>
 <thead>
@@ -221,6 +225,16 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>username</code></td>
+<td><code>HTTP_200_OK</code> <ul><li><code>last_login</code>, <code>nickname</code>, <code>role</code>, <code>first_name</code>, <code>registration_status</code>, <code>user_online_date</code>, <code>last_name</code>, <code>email</code></li></ul></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>Authorization</code></td>
+<td><code>HTTP_200_OK</code><ul><li><code>last_login</code>, <code>nickname</code>, <code>role</code>, <code>first_name</code>, <code>registration_status</code>, <code>user_online_date</code>, <code>last_name</code>, <code>email</code></li></ul></td>
+</tr>
 <tr>
 <td><code>PATCH</code></td>
 <td><ul><li><code>Authorization</code></li><li><code>'Content-Type': 'multipart/form-data'</code></li><li><code>first_name</code>, <code>last_name</code>, <code>nickname</code></li></ul></td>
@@ -247,7 +261,7 @@
 </tbody>
 </table>
 <h2 id="_8">Персонажи</h2>
-<p>Конечная точка для получения списка всех персонажей пользователя.</p>
+<p>Конечная точка для получения списка всех персонажей.</p>
 <table>
 <thead>
 <tr>
@@ -260,7 +274,7 @@
 <tr>
 <td><code>GET</code></td>
 <td></td>
-<td><code>HTTP_200_OK</code> <ul><li><code>id</code></li></ul></td>
+<td><code>HTTP_200_OK</code> <ul><li><code>type</code>, <code>nickname</code></li></ul></td>
 </tr>
 </tbody>
 </table>
@@ -279,11 +293,49 @@
 <tr>
 <td><code>GET</code></td>
 <td></td>
-<td><code>HTTP_200_OK</code><ul><li><code>name</code>,<code>description</code>,<code>start_time</code>,<code>end_time</code></li></ul></td>
+<td><code>HTTP_200_OK</code><ul><li><code>name</code>,<code>description</code>,<code>period</code>,<code>start_date</code>,<code>start_time</code>,<code>end_time</code>,<code>max_value</code>,<code>color</code></li></ul></td>
 </tr>
 </tbody>
 </table>
-<h2 id="_10">Прогресс</h2>
+<h2 id="_10">Персонажи и пользователи</h2>
+<p>Конечная точка для получения пользователей с персонажами.</p>
+<p><strong>URL-адрес:</strong> <code>/api/character_owners/</code></p>
+<table>
+<thead>
+<tr>
+<th>Метод</th>
+<th>Запрос</th>
+<th>Ответ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td></td>
+<td><code>HTTP_200_OK</code><ul><li><code>nickname</code></li><code>type</code>, <code>nickname</code><li><code>character_user</code></li><code>last_login</code>, <code>nickname</code>, <code>role</code>, <code>first_name</code>, <code>registration_status</code>, <code>user_online_date</code></ul></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_11">Персонажи и события</h2>
+<p>Конечная точка для получения персонажей с событиями.</p>
+<p><strong>URL-адрес:</strong> <code>/api/character_events/</code></p>
+<table>
+<thead>
+<tr>
+<th>Метод</th>
+<th>Запрос</th>
+<th>Ответ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td></td>
+<td><code>HTTP_200_OK</code><ul><li><code>character</code></li><code>type</code>, <code>nickname</code><li><code>event</code></li><code>name</code>, <code>description</code>, <code>period</code>, <code>start_date</code>, <code>start_time</code>, <code>end_time</code>, <code>max_value</code>, <code>color</code><li><code>status</code></li><li><code>date</code></li><li><code>value</code></li></ul></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_12">Прогресс</h2>
 <table>
     <thead>
         <tr>
@@ -305,16 +357,22 @@
           <td>
             /api/users/
           </td>
+          <td>
+            100%
+          </td>
         </tr>
         <tr>
           <td>
               CharacterOwner
           </td>
           <td>
-            -
+            Персонажи и пользователи
           </td>
           <td>
             /api/character_owners/
+          </td>
+          <td>
+            100%
           </td>
         </tr>
         <tr>
@@ -322,10 +380,13 @@
              Character
           </td>
           <td>
-            -<br>Персонажи
+            Персонажи
           </td>
           <td>
             /api/characters/
+          </td>
+          <td>
+            100%
           </td>
         </tr>
         <tr>
@@ -333,10 +394,13 @@
              CharacterEvent
           </td>
           <td>
-            -
+            Персонажи и события
           </td>
           <td>
             /api/character_events/
+          </td>
+          <td>
+            100%
           </td>
         </tr>
         <tr>
@@ -349,16 +413,36 @@
           <td>
             /api/events/
           </td>
+          <td>
+            100%
+          </td>
         </tr>
         <tr>
           <td>
-             User by username
+             user by username
           </td>
           <td>
-            -
+            Данные пользователя
           </td>
           <td>
             /api/user/
+          </td>
+          <td>
+            100%
+          </td>
+        </tr>
+        <tr>
+          <td>
+             user
+          </td>
+          <td>
+            Данные пользователя
+          </td>
+          <td>
+            /api/user/
+          </td>
+          <td>
+            100%
           </td>
         </tr>
         <tr>
@@ -461,10 +545,10 @@
              UPDATE User
           </td>
           <td>
-            Изменить данные пользователя
+            Данные пользователя
           </td>
           <td>
-            /user/update/
+            /user/
           </td>
           <td>
             100%
