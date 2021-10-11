@@ -51,11 +51,25 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#_1">Пользователи</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#_2">Персонажи</a>
+    <li class="toctree-l2"><a class="reference internal" href="#_2">Создание пользователя</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#_3">События по дате</a>
+    <li class="toctree-l2"><a class="reference internal" href="#_3">Вход пользователя</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#_4">Остальное</a>
+    <li class="toctree-l2"><a class="reference internal" href="#_4">Проверка пользователя</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_5">Изменить пароль</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_6">Изменить данные пользователя</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_7">Выход</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_8">Персонажи</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_9">События по дате</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_10">Остальное</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_11">Прогресс</a>
     </li>
     </ul>
                     </li>
@@ -109,11 +123,132 @@
 <tr>
 <td><code>GET</code></td>
 <td></td>
-<td><code>HTTP_200_OK</code> <ul><li><code>{{ User.id }}</code></li><li><code>{{ User.nickname }}</code></li><li><code>{{ User.role }}</code></li><li><code>{{ User.user_online_date }}</code></li></ul></td>
+<td><code>HTTP_200_OK</code> <ul><li><code>id</code>, <code>nickname</code>, <code>role</code>, <code>user_online_date</code></li></ul></td>
 </tr>
 </tbody>
 </table>
-<h2 id="_2">Персонажи</h2>
+<h2 id="_2">Создание пользователя</h2>
+<p><strong>URL-адрес:</strong> <code>/auth/users/</code></p>
+<table>
+<thead>
+<tr>
+<th>Метод</th>
+<th>Запрос</th>
+<th>Ответ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST</code></td>
+<td><ul><li><code>'Content-Type': 'multipart/form-data'</code></li><li><code>username</code>, <code>email</code>,<code>password</code></li></ul></td>
+<td><code>HTTP_201_CREATED</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Username<BR>
+    150 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
+<p>Password<BR>
+    Your password can’t be too similar to your other personal information.
+    Your password must contain at least 8 characters.
+    Your password can’t be a commonly used password.
+    Your password can’t be entirely numeric.</p>
+</blockquote>
+<h2 id="_3">Вход пользователя</h2>
+<p><strong>URL-адрес:</strong> <code>/auth/token/login/</code></p>
+<table>
+<thead>
+<tr>
+<th>Метод</th>
+<th>Запрос</th>
+<th>Ответ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST</code></td>
+<td><ul><li><code>'Content-Type': 'multipart/form-data'</code></li><li><code>username</code>, <code>password</code></li></ul></td>
+<td><ul><li><code>HTTP_200_OK</code>, <code>auth_token</code></li></ul></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_4">Проверка пользователя</h2>
+<p><strong>URL-адрес:</strong> <code>/auth/users/me/</code></p>
+<table>
+<thead>
+<tr>
+<th>Метод</th>
+<th>Запрос</th>
+<th>Ответ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>Authorization</code></td>
+<td><code>200</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Authorization<BR>
+     <code>Token &lt;auth_token&gt;</code></p>
+</blockquote>
+<h2 id="_5">Изменить пароль</h2>
+<p><strong>URL-адрес:</strong> <code>/auth/users/set_password/</code></p>
+<table>
+<thead>
+<tr>
+<th>Метод</th>
+<th>Запрос</th>
+<th>Ответ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST</code></td>
+<td><ul><li><code>Authorization</code></li><li><code>'Content-Type': 'multipart/form-data'</code></li><li><code>current_password</code>, <code>new_password</code></li></ul></td>
+<td><code>HTTP_204_NO_CONTENT</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_6">Изменить данные пользователя</h2>
+<p><strong>URL-адрес:</strong> <code>/user/&lt;id&gt;/</code></p>
+<table>
+<thead>
+<tr>
+<th>Метод</th>
+<th>Запрос</th>
+<th>Ответ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PATCH</code></td>
+<td><ul><li><code>Authorization</code></li><li><code>'Content-Type': 'multipart/form-data'</code></li><li><code>first_name</code>, <code>last_name</code>, <code>nickname</code></li></ul></td>
+<td><code>HTTP_204_NO_CONTENT</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_7">Выход</h2>
+<p><strong>URL-адрес:</strong> <code>/auth/token/logout/</code></p>
+<table>
+<thead>
+<tr>
+<th>Метод</th>
+<th>Запрос</th>
+<th>Ответ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST</code></td>
+<td><code>Authorization</code></td>
+<td><ul><li><code>HTTP_200_OK</code></li><li><code>HTTP_204_NO_CONTENT</code></li></ul></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_8">Персонажи</h2>
 <p>Конечная точка для получения списка всех персонажей пользователя.</p>
 <table>
 <thead>
@@ -127,12 +262,12 @@
 <tr>
 <td><code>GET</code></td>
 <td></td>
-<td><code>HTTP_200_OK</code> <ul><li><code>{{ User.id }}</code></li></ul></td>
+<td><code>HTTP_200_OK</code> <ul><li><code>id</code></li></ul></td>
 </tr>
 </tbody>
 </table>
-<h2 id="_3">События по дате</h2>
-<p>Конечная точка для получения событий по заданной дате.</p>
+<h2 id="_9">События по дате</h2>
+<p>Конечная точка для получения событий.</p>
 <p><strong>URL-адрес:</strong> <code>/api/events/</code></p>
 <table>
 <thead>
@@ -145,12 +280,12 @@
 <tbody>
 <tr>
 <td><code>GET</code></td>
-<td><code>date</code></td>
-<td><code>HTTP_200_OK</code><ul><li><code>{{ Event.name }}</code></li><li><code>{{ Event.description }}</code></li><li><code>{{ Event.start_time }}</code></li><li><code>{{ Event.end_time }}</code></li></ul></td>
+<td></td>
+<td><code>HTTP_200_OK</code><ul><li><code>name</code>,<code>description</code>,<code>start_time</code>,<code>end_time</code></li></ul></td>
 </tr>
 </tbody>
 </table>
-<h2 id="_4">Остальное</h2>
+<h2 id="_10">Остальное</h2>
 <p>Удалить пользователя
 @admin
 /user/delete/<id></p>
@@ -169,22 +304,188 @@ nickname, role,user_online_date,first_name, last_name, email
 characters:
   character
 sum reputation today</p>
-<p>Изменить поля у пользователя
-/user/<id>
-patch</p>
 <p>Список персонажей</p>
 <p>Создать персонажа</p>
 <p>Удалить перонажа</p>
 <p>Добавить персонажу событие</p>
 <p>Изменить состояние события</p>
 <p>Список событий на сегодня</p>
-<p>Username
-150 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
-<p>Password
-Your password can’t be too similar to your other personal information.
-Your password must contain at least 8 characters.
-Your password can’t be a commonly used password.
-Your password can’t be entirely numeric.</p>
+<h2 id="_11">Прогресс</h2>
+<table>
+    <thead>
+        <tr>
+            <th>План</th>
+            <th>Реализация</th>
+        </tr>
+    </thead>
+    <tbody align="center">
+        <tr>
+            <td colspan=2><b>READ</b></td>
+        </tr>
+        <tr>
+          <td>User
+          </td><td>
+            Пользователи
+          </td>
+        </tr>
+        <tr>
+          <td>
+              CharacterOwner
+          </td>
+          <td>
+            -
+          </td>
+        </tr>
+        <tr>
+          <td>
+             Character
+          </td>
+          <td>
+            -
+          </td>
+        </tr>
+        <tr>
+          <td>
+             CharacterEvent
+          </td>
+          <td>
+            -
+          </td>
+        </tr>
+        <tr>
+          <td>
+             Event
+          </td>
+          <td>
+            -
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+             <b>RELATED<b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+             Character + {User}
+          </td>
+          <td>
+            -
+          </td>
+        </tr>
+        <tr>
+          <td>
+             User + {Character}
+          </td>
+          <td>
+            -
+          </td>
+        </tr>
+        <tr>
+          <td>
+             Character + {Event}
+          </td>
+          <td>
+            -
+          </td>
+        </tr>
+        <tr>
+          <td>
+             Event + {Character}
+          </td>
+          <td>
+            -
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+             <b>CREATE<b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+             CREATE User
+          </td>
+          <td>
+            -
+          </td>
+        </tr>
+        <tr>
+          <td>
+             CREATE Character
+          </td>
+          <td>
+            -
+          </td>
+        </tr>
+        <tr>
+          <td>
+             CREATE Event
+          </td>
+          <td>
+            -
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+             <b>UPDATE<b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+             UPDATE User
+          </td>
+          <td>
+            -
+          </td>
+        </tr>
+        <tr>
+          <td>
+             UPDATE Character
+          </td>
+          <td>
+            -
+          </td>
+        </tr>
+        <tr>
+          <td>
+             UPDATE Event
+          </td>
+          <td>
+            -
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+             <b>DELETE<b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+             DELETE User
+          </td>
+          <td>
+            -
+          </td>
+        </tr>
+        <tr>
+          <td>
+             DELETE Character
+          </td>
+          <td>
+            -
+          </td>
+        </tr>
+        <tr>
+          <td>
+             DELETE Event
+          </td>
+          <td>
+            -
+          </td>
+        </tr>
+    </tbody>
+</table>
               
             </div>
           </div>
