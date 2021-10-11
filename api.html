@@ -65,11 +65,9 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#_8">Персонажи</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#_9">События по дате</a>
+    <li class="toctree-l2"><a class="reference internal" href="#_9">События</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#_10">Остальное</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#_11">Прогресс</a>
+    <li class="toctree-l2"><a class="reference internal" href="#_10">Прогресс</a>
     </li>
     </ul>
                     </li>
@@ -266,7 +264,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_9">События по дате</h2>
+<h2 id="_9">События</h2>
 <p>Конечная точка для получения событий.</p>
 <p><strong>URL-адрес:</strong> <code>/api/events/</code></p>
 <table>
@@ -285,32 +283,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_10">Остальное</h2>
-<p>Удалить пользователя
-@admin
-/user/delete/<id></p>
-<p>Информация о пользователе
-/user/<id>
-get
-nickname, role,user_online_date,first_name
-characters:
-  character
-sum reputation today</p>
-<p>Профиль пользователя
-/user/
-get
-?nickname=
-nickname, role,user_online_date,first_name, last_name, email
-characters:
-  character
-sum reputation today</p>
-<p>Список персонажей</p>
-<p>Создать персонажа</p>
-<p>Удалить перонажа</p>
-<p>Добавить персонажу событие</p>
-<p>Изменить состояние события</p>
-<p>Список событий на сегодня</p>
-<h2 id="_11">Прогресс</h2>
+<h2 id="_10">Прогресс</h2>
 <table>
     <thead>
         <tr>
@@ -340,16 +313,19 @@ sum reputation today</p>
           <td>
             -
           </td>
+          <td>
+            /api/character_owners/
+          </td>
         </tr>
         <tr>
           <td>
              Character
           </td>
           <td>
-            Персонажи
+            -<br>Персонажи
           </td>
           <td>
-            -
+            /api/characters/
           </td>
         </tr>
         <tr>
@@ -359,13 +335,16 @@ sum reputation today</p>
           <td>
             -
           </td>
+          <td>
+            /api/character_events/
+          </td>
         </tr>
         <tr>
           <td>
              Event
           </td>
           <td>
-            События по дате
+            События
           </td>
           <td>
             /api/events/
@@ -383,6 +362,9 @@ sum reputation today</p>
           <td>
             -
           </td>
+          <td>
+            /api/character/users/
+          </td>
         </tr>
         <tr>
           <td>
@@ -390,6 +372,9 @@ sum reputation today</p>
           </td>
           <td>
             -
+          </td>
+          <td>
+            /api/user/characters/
           </td>
         </tr>
         <tr>
@@ -399,6 +384,9 @@ sum reputation today</p>
           <td>
             -
           </td>
+          <td>
+            /api/character/events/
+          </td>
         </tr>
         <tr>
           <td>
@@ -407,13 +395,16 @@ sum reputation today</p>
           <td>
             -
           </td>
+          <td>
+            /api/event/characters/
+          </td>
         </tr>
         <tr>
           <td colspan="3">
              <b>CREATE<b>
           </td>
         </tr>
-        <tr>
+        <tr bgcolor="green">
           <td>
              CREATE User
           </td>
@@ -431,6 +422,9 @@ sum reputation today</p>
           <td>
             -
           </td>
+          <td>
+            /api/character/create/
+          </td>
         </tr>
         <tr>
           <td>
@@ -438,6 +432,9 @@ sum reputation today</p>
           </td>
           <td>
             -
+          </td>
+          <td>
+            /api/event/create/
           </td>
         </tr>
         <tr>
@@ -450,13 +447,13 @@ sum reputation today</p>
              UPDATE User
           </td>
           <td>
-            Изменить данные пользователя
+            -<br>Изменить данные пользователя
           </td>
           <td>
-            /user/[id]/
+            /user/update/
           </td>
         </tr>
-        <tr>
+        <tr bgcolor="green">
           <td>
              UPDATE User Password
           </td>
@@ -474,6 +471,9 @@ sum reputation today</p>
           <td>
             -
           </td>
+          <td>
+            /api/character/update/
+          </td>
         </tr>
         <tr>
           <td>
@@ -481,6 +481,9 @@ sum reputation today</p>
           </td>
           <td>
             -
+          </td>
+          <td>
+            /api/event/update/
           </td>
         </tr>
         <tr>
@@ -495,6 +498,9 @@ sum reputation today</p>
           <td>
             -
           </td>
+          <td>
+            /api/user/delete/
+          </td>
         </tr>
         <tr>
           <td>
@@ -502,6 +508,9 @@ sum reputation today</p>
           </td>
           <td>
             -
+          </td>
+          <td>
+            /api/character/delete/
           </td>
         </tr>
         <tr>
@@ -511,13 +520,16 @@ sum reputation today</p>
           <td>
             -
           </td>
+          <td>
+            /api/event/delete/
+          </td>
         </tr>
         <tr>
           <td colspan="3">
              <b>TOKEN</b>
           </td>
         </tr>
-        <tr>
+        <tr bgcolor="green">
           <td>
              Login
           </td>
@@ -528,7 +540,7 @@ sum reputation today</p>
             /auth/token/login/
           </td>
         </tr>
-        <tr>
+        <tr bgcolor="green">
           <td>
              Logout
           </td>
@@ -539,7 +551,7 @@ sum reputation today</p>
             /auth/token/logout/
           </td>
         </tr>
-        <tr>
+        <tr bgcolor="green">
           <td>
              Check
           </td>
