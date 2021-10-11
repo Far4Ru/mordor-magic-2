@@ -211,7 +211,7 @@
 </tbody>
 </table>
 <h2 id="_6">Изменить данные пользователя</h2>
-<p><strong>URL-адрес:</strong> <code>/user/&lt;id&gt;/</code></p>
+<p><strong>URL-адрес:</strong> <code>/api/user/</code></p>
 <table>
 <thead>
 <tr>
@@ -351,6 +351,17 @@
           </td>
         </tr>
         <tr>
+          <td>
+             User by username
+          </td>
+          <td>
+            -
+          </td>
+          <td>
+            /api/user/
+          </td>
+        </tr>
+        <tr>
           <td colspan="3">
              <b>RELATED<b>
           </td>
@@ -404,7 +415,7 @@
              <b>CREATE<b>
           </td>
         </tr>
-        <tr bgcolor="green">
+        <tr>
           <td>
              CREATE User
           </td>
@@ -413,6 +424,9 @@
           </td>
           <td>
             /auth/users/
+          </td>
+          <td>
+            100%
           </td>
         </tr>
         <tr>
@@ -453,7 +467,7 @@
             /user/update/
           </td>
         </tr>
-        <tr bgcolor="green">
+        <tr>
           <td>
              UPDATE User Password
           </td>
@@ -462,6 +476,9 @@
           </td>
           <td>
             /auth/users/set_password/
+          </td>
+          <td>
+            100%
           </td>
         </tr>
         <tr>
@@ -529,7 +546,7 @@
              <b>TOKEN</b>
           </td>
         </tr>
-        <tr bgcolor="green">
+        <tr>
           <td>
              Login
           </td>
@@ -539,8 +556,11 @@
           <td>
             /auth/token/login/
           </td>
+          <td>
+            100%
+          </td>
         </tr>
-        <tr bgcolor="green">
+        <tr>
           <td>
              Logout
           </td>
@@ -550,8 +570,11 @@
           <td>
             /auth/token/logout/
           </td>
+          <td>
+            100%
+          </td>
         </tr>
-        <tr bgcolor="green">
+        <tr>
           <td>
              Check
           </td>
@@ -560,6 +583,9 @@
           </td>
           <td>
             /auth/users/me/
+          </td>
+          <td>
+            100%
           </td>
         </tr>
     </tbody>
