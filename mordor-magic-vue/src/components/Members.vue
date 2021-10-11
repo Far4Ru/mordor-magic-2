@@ -85,7 +85,7 @@ export default {
   data: () => ({
     info: '',
     dialog: false,
-    admin: false,
+    admin: true,
     roles: [
       { text: 'Зам. главы' },
       { text: 'Офицер' },

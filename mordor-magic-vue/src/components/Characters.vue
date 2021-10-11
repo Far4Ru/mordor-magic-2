@@ -1,7 +1,7 @@
 <template>
   <section>
     <v-row>
-      <v-col cols="6" class="mx-auto">
+      <v-col cols="7" class="mx-auto">
         <h2>Персонажи</h2>
         <template>
           <v-data-table
