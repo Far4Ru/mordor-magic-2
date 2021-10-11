@@ -276,6 +276,17 @@ export default {
       }
       this.close()
     },
+    createCharacter () {
+      try {
+        this.axios
+          .get(server + 'characters/create/')
+          .then(response => {
+            console.log(response.data)
+          })
+      } catch (e) {
+        console.error('AN API ERROR', e)
+      }
+    },
     getCharacters () {
       console.log(server)
       this.characterList = [

@@ -9,7 +9,21 @@
               Ежедневные
             </v-expansion-panel-header>
             <v-expansion-panel-content
-              v-for="(event, i) in events"
+              v-for="(event, i) in events.filter(e => e.period == 'd')"
+              :key="i"
+            >
+              <v-checkbox
+                v-model="event.visible"
+                :label="`${event.name}`"
+              ></v-checkbox>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+          <v-expansion-panel>
+            <v-expansion-panel-header>
+              Еженедельные
+            </v-expansion-panel-header>
+            <v-expansion-panel-content
+              v-for="(event, i) in events.filter(e => e.period == 'w')"
               :key="i"
             >
               <v-checkbox

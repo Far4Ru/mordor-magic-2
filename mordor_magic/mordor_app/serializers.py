@@ -32,13 +32,22 @@ class CharacterSerializer(serializers.ModelSerializer):
 
 
 class CharacterOwnerOwnerSerializer(serializers.ModelSerializer):
+    owner = UserSerializer(read_only=True)
+
+    class Meta:
+        model = CharacterOwner
+        fields = ['owner']
+
+
+class CharacterOwnerOwnerCreateSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = CharacterOwner
         fields = ['owner']
 
 
 class CharacterCreateSerializer(serializers.ModelSerializer):
-    user_characters = CharacterOwnerOwnerSerializer()
+    user_characters = CharacterOwnerOwnerCreateSerializer()
 
     class Meta:
         model = Character
@@ -57,6 +66,23 @@ class CharacterOwnerCharacterSerializer(serializers.ModelSerializer):
     class Meta:
         model = CharacterOwner
         fields = ['character']
+
+
+class CharacterOwnersSerializer(serializers.ModelSerializer):
+    user_characters = CharacterOwnerOwnerSerializer()
+
+    class Meta:
+        model = Character
+        fields = ['nickname', 'email', 'type', 'user_characters']
+
+
+class CharacterOwnerSerializer(serializers.ModelSerializer):
+    character = CharacterSerializer(read_only=True)
+    owner = UserSerializer(read_only=True)
+
+    class Meta:
+        model = CharacterOwner
+        fields = '__all__'
 
 
 class UserCharactersSerializer(serializers.ModelSerializer):

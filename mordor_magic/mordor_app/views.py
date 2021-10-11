@@ -14,10 +14,27 @@ class CharacterCreateAPIView(generics.CreateAPIView):
     serializer_class = CharacterCreateSerializer
     queryset = Character.objects.all()
 
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.serializer_class(...)
+    #     data = serializer.data
+    #     return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
+
 
 class CharacterListAPIView(generics.ListAPIView):
-    serializer_class = CharacterSerializer
-    queryset = Character.objects.all()
+    serializer_class = CharacterOwnerSerializer
+    queryset = CharacterOwner.objects.all()
+
+    # def get_queryset(self):
+    #     nickname = self.request.GET.get('nickname')
+    #     if nickname:
+    #         try:
+    #             queryset = self.queryset.filter(nickname=nickname)
+    #         except ValueError:
+    #             queryset = self.Character.objects.none()
+    #         return queryset
+    #     return self.Character.objects.none()
+    # def list(self, request):
+    #     queryset = CharacterOwner.objects.filter(owner=request.user)
 
 
 # @permission_classes([IsAuthenticated])
@@ -48,6 +65,14 @@ class UserAPIView(generics.ListAPIView):
                 queryset = self.model.objects.none()
             return queryset
         return self.model.objects.none()
+
+    def patch(self, request):
+        user = request.user
+        serializer = UserUpdateSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED, data=serializer.data)
+        return Response(status=status.HTTP_400_BAD_REQUEST, data="wrong parameters")
 
 
 # @permission_classes([IsAuthenticated])

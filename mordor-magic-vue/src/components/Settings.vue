@@ -127,7 +127,7 @@ export default {
           }
         }
         this.axios
-          .patch(apiUrl + 'user/' + this.id + '/', data, config)
+          .patch(apiUrl + 'user/', data, config)
           .then(response => {
             if (response.status === 204) {
               // success
