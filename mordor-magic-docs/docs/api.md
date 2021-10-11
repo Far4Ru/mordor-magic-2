@@ -8,7 +8,7 @@
 
 |  Метод | Запрос  | Ответ | 
 |---|---|---|
-|  `GET` |   |  `HTTP_200_OK` <ul><li>`id`, `nickname`, `role`, `user_online_date`</li></ul>|
+|  `GET` |   |  `HTTP_200_OK` <ul><li>`last_login`, `nickname`, `role`, `first_name`, `registration_status`, `user_online_date`, `last_name`, `email`</li></ul>|
 
 ## Создание пользователя
 
@@ -54,13 +54,15 @@
 ---|---|---
 `POST` | <ul><li>`Authorization`</li><li>`'Content-Type': 'multipart/form-data'`</li><li>`current_password`, `new_password`</li></ul> | `HTTP_204_NO_CONTENT`
 
-## Изменить данные пользователя
+## Данные пользователя
 
 **URL-адрес:** `/api/user/`
 
 Метод | Запрос  | Ответ
 ---|---|---
-`PATCH` | <ul><li>`Authorization`</li><li>`'Content-Type': 'multipart/form-data'`</li><li>`first_name`, `last_name`, `nickname`</li></ul> | `HTTP_204_NO_CONTENT`
+`GET` | `username` | `HTTP_200_OK` <ul><li>`last_login`, `nickname`, `role`, `first_name`, `registration_status`, `user_online_date`, `last_name`, `email`</li></ul>
+`GET` | `Authorization` | `HTTP_200_OK`<ul><li>`last_login`, `nickname`, `role`, `first_name`, `registration_status`, `user_online_date`, `last_name`, `email`</li></ul>
+`PATCH` | <ul><li>`Authorization`</li><li>`'Content-Type': 'multipart/form-data'`</li><li>`first_name`, `last_name`, `nickname`</li></ul> | `HTTP_201_CREATED`, `HTTP_204_NO_CONTENT`
 
 ## Выход
 
@@ -72,11 +74,11 @@
 
 ## Персонажи
 
-Конечная точка для получения списка всех персонажей пользователя.
+Конечная точка для получения списка всех персонажей.
 
 |  Метод | Запрос  | Ответ | 
 |---|---|---|
-|  `GET` |   |  `HTTP_200_OK` <ul><li>`id`</li></ul>|
+|  `GET` |   |  `HTTP_200_OK` <ul><li>`type`, `nickname`</li></ul>|
 
 ## События
 
@@ -86,7 +88,27 @@
 
 |  Метод | Запрос  | Ответ | 
 |---|---|---|
-|  `GET` |   |  `HTTP_200_OK`<ul><li>`name`,`description`,`start_time`,`end_time`</li></ul>|
+|  `GET` |   |  `HTTP_200_OK`<ul><li>`name`,`description`,`period`,`start_date`,`start_time`,`end_time`,`max_value`,`color`</li></ul>|
+
+## Персонажи и пользователи
+
+Конечная точка для получения пользователей с персонажами.
+
+**URL-адрес:** `/api/character_owners/`
+
+|  Метод | Запрос  | Ответ | 
+|---|---|---|
+|  `GET` |   |  `HTTP_200_OK`<ul><li>`nickname`</li>`type`, `nickname`<li>`character_user`</li>`last_login`, `nickname`, `role`, `first_name`, `registration_status`, `user_online_date`</ul>|
+
+## Персонажи и события
+
+Конечная точка для получения персонажей с событиями.
+
+**URL-адрес:** `/api/character_events/`
+
+|  Метод | Запрос  | Ответ | 
+|---|---|---|
+|  `GET` |   |  `HTTP_200_OK`<ul><li>`character`</li>`type`, `nickname`<li>`event`</li>`name`, `description`, `period`, `start_date`, `start_time`, `end_time`, `max_value`, `color`<li>`status`</li><li>`date`</li><li>`value`</li></ul>|
 
 ## Прогресс
 
@@ -111,16 +133,22 @@
           <td>
             /api/users/
           </td>
+          <td>
+            100%
+          </td>
         </tr>
         <tr>
           <td>
               CharacterOwner
           </td>
           <td>
-            -
+            Персонажи и пользователи
           </td>
           <td>
             /api/character_owners/
+          </td>
+          <td>
+            100%
           </td>
         </tr>
         <tr>
@@ -128,10 +156,13 @@
              Character
           </td>
           <td>
-            -<br>Персонажи
+            Персонажи
           </td>
           <td>
             /api/characters/
+          </td>
+          <td>
+            100%
           </td>
         </tr>
         <tr>
@@ -139,10 +170,13 @@
              CharacterEvent
           </td>
           <td>
-            -
+            Персонажи и события
           </td>
           <td>
             /api/character_events/
+          </td>
+          <td>
+            100%
           </td>
         </tr>
         <tr>
@@ -154,6 +188,37 @@
           </td>
           <td>
             /api/events/
+          </td>
+          <td>
+            100%
+          </td>
+        </tr>
+        <tr>
+          <td>
+             user by username
+          </td>
+          <td>
+            Данные пользователя
+          </td>
+          <td>
+            /api/user/
+          </td>
+          <td>
+            100%
+          </td>
+        </tr>
+        <tr>
+          <td>
+             user
+          </td>
+          <td>
+            Данные пользователя
+          </td>
+          <td>
+            /api/user/
+          </td>
+          <td>
+            100%
           </td>
         </tr>
         <tr>
@@ -220,6 +285,9 @@
           <td>
             /auth/users/
           </td>
+          <td>
+            100%
+          </td>
         </tr>
         <tr>
           <td>
@@ -253,10 +321,13 @@
              UPDATE User
           </td>
           <td>
-            -<br>Изменить данные пользователя
+            Данные пользователя
           </td>
           <td>
-            /user/update/
+            /user/
+          </td>
+          <td>
+            100%
           </td>
         </tr>
         <tr>
@@ -268,6 +339,9 @@
           </td>
           <td>
             /auth/users/set_password/
+          </td>
+          <td>
+            100%
           </td>
         </tr>
         <tr>
@@ -345,6 +419,9 @@
           <td>
             /auth/token/login/
           </td>
+          <td>
+            100%
+          </td>
         </tr>
         <tr>
           <td>
@@ -356,6 +433,9 @@
           <td>
             /auth/token/logout/
           </td>
+          <td>
+            100%
+          </td>
         </tr>
         <tr>
           <td>
@@ -366,6 +446,9 @@
           </td>
           <td>
             /auth/users/me/
+          </td>
+          <td>
+            100%
           </td>
         </tr>
     </tbody>

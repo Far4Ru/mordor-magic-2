@@ -7,20 +7,20 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['last_login', 'id', 'nickname', 'role']
+        fields = ['last_login', 'nickname', 'role', 'first_name', 'registration_status', 'user_online_date', 'last_name', 'email']
 
 
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = '__all__'
+        exclude = ['id']
 
 
 class UserUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'nickname', 'first_name', 'last_name']
+        fields = ['nickname', 'first_name', 'last_name']
 
 
 class CharacterSerializer(serializers.ModelSerializer):
@@ -28,7 +28,15 @@ class CharacterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Character
-        fields = '__all__'
+        exclude = ['id']
+
+
+class CharacterPublicSerializer(serializers.ModelSerializer):
+    type = serializers.CharField(source="get_type_display", read_only=True)
+
+    class Meta:
+        model = Character
+        exclude = ['id', 'email']
 
 
 class CharacterOwnerOwnerSerializer(serializers.ModelSerializer):
@@ -77,12 +85,12 @@ class CharacterOwnersSerializer(serializers.ModelSerializer):
 
 
 class CharacterOwnerSerializer(serializers.ModelSerializer):
-    character = CharacterSerializer(read_only=True)
+    character = CharacterPublicSerializer(read_only=True)
     owner = UserSerializer(read_only=True)
 
     class Meta:
         model = CharacterOwner
-        fields = '__all__'
+        exclude = ['id']
 
 
 class UserCharactersSerializer(serializers.ModelSerializer):
@@ -94,9 +102,12 @@ class UserCharactersSerializer(serializers.ModelSerializer):
 
 
 class CharacterEventSerializer(serializers.ModelSerializer):
+    character = CharacterPublicSerializer(read_only=True)
+    event = EventSerializer(read_only=True)
+
     class Meta:
         model = CharacterEvent
-        fields = '__all__'
+        exclude = ['id']
 
 
 class CharacterEventsSerializer(serializers.ModelSerializer):

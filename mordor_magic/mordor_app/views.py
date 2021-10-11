@@ -21,8 +21,9 @@ class CharacterCreateAPIView(generics.CreateAPIView):
 
 
 class CharacterListAPIView(generics.ListAPIView):
-    serializer_class = CharacterOwnerSerializer
-    queryset = CharacterOwner.objects.all()
+    serializer_class = CharacterPublicSerializer
+    model = Character
+    queryset = Character.objects.all()
 
     # def get_queryset(self):
     #     nickname = self.request.GET.get('nickname')
@@ -51,11 +52,13 @@ class EventListAPIView(generics.ListAPIView):
 # @permission_classes([IsAuthenticated])
 class UserAPIView(generics.ListAPIView):
     model = User
-    serializer_class = UserUpdateSerializer
+    serializer_class = UserSerializer
     queryset = model.objects.all()
 
     def get_queryset(self):
         username = self.request.GET.get('username')
+        if not username:
+            username = self.request.user.username
         # user = self.request.username
         if username:
             try:
@@ -68,21 +71,6 @@ class UserAPIView(generics.ListAPIView):
 
     def patch(self, request):
         user = request.user
-        serializer = UserUpdateSerializer(user, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_201_CREATED, data=serializer.data)
-        return Response(status=status.HTTP_400_BAD_REQUEST, data="wrong parameters")
-
-
-# @permission_classes([IsAuthenticated])
-class UserUpdateAPIView(APIView):
-    @staticmethod
-    def get_object(pk):
-        return User.objects.get(pk=pk)
-
-    def patch(self, request, pk):
-        user = self.get_object(pk)
         serializer = UserUpdateSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
@@ -138,3 +126,13 @@ class CharacterEventsCountAPIView(generics.ListAPIView):
                 queryset = self.Character.objects.none()
             return queryset
         return self.Character.objects.none()
+
+
+class CharacterOwnersListAPIView(generics.ListAPIView):
+    serializer_class = CharacterOwnerSerializer
+    queryset = CharacterOwner.objects.all()
+
+
+class CharacterEventsListAPIView(generics.ListAPIView):
+    serializer_class = CharacterEventSerializer
+    queryset = CharacterEvent.objects.all()

@@ -5,7 +5,6 @@ from .views import *
 urlpatterns = [
     path('users/', UserListAPIView.as_view()),
     path('user/', UserAPIView.as_view()),
-    path('user/update/', UserUpdateAPIView.as_view()),
     # path('user/delete/', 0),
     path('user/characters/', UserCharactersAPIView.as_view()),
     path('characters/', CharacterListAPIView.as_view()),
@@ -20,8 +19,8 @@ urlpatterns = [
     # path('event/create/', 0),
     # path('event/update/', 0),
     # path('event/delete/', 0),
-    # path('character_owners/', 0),
-    # path('character_events/', 0),
+    path('character_owners/', CharacterOwnersListAPIView.as_view()),
+    path('character_events/', CharacterEventsListAPIView.as_view()),
 
     url(r'^auth/', include('djoser.urls')),
     url(r'^auth/', include('djoser.urls.authtoken')),
