@@ -42,6 +42,8 @@ class Event(models.Model):
     name = models.CharField(max_length=30, unique=True)
     description = models.CharField(max_length=255)
     period = models.CharField(choices=periods, max_length=1)
+    period_parity = models.BooleanField(null=True)
+    period_across = models.IntegerField(null=True)
     start_date = models.DateField(null=True)
     start_time = models.TimeField(null=True)
     end_time = models.TimeField(null=True)

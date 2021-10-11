@@ -1,3 +1,6 @@
+from datetime import datetime
+from itertools import chain
+
 from django.db import transaction
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -47,6 +50,26 @@ class UserListAPIView(generics.ListAPIView):
 class EventListAPIView(generics.ListAPIView):
     serializer_class = EventSerializer
     queryset = Event.objects.all()
+    model = Event
+
+    def get_queryset(self):
+        date = self.request.GET.get('date')
+        if date:
+            try:
+                date_time_obj = datetime.strptime(date, '%d.%m.%Y %H:%M:%S')
+                queryset = self.queryset.filter(period="d")
+                queryset_week2 = self.queryset.filter(period="w")\
+                    .filter(period_across=2)\
+                    .filter(period_parity=date_time_obj.timetuple().tm_yday // 7 % 2)\
+                    .filter(start_date__iso_week_day=date_time_obj.weekday())
+                queryset_week1 = self.queryset.filter(period="w")\
+                    .filter(period_across=1)\
+                    .filter(start_date__iso_week_day=date_time_obj.weekday())
+                queryset = list(chain(queryset, queryset_week1, queryset_week2))
+            except ValueError:
+                queryset = self.model.objects.none()
+            return queryset
+        return self.model.objects.all()
 
 
 # @permission_classes([IsAuthenticated])
@@ -69,7 +92,8 @@ class UserAPIView(generics.ListAPIView):
             return queryset
         return self.model.objects.none()
 
-    def patch(self, request):
+    @staticmethod
+    def patch(request):
         user = request.user
         serializer = UserUpdateSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():

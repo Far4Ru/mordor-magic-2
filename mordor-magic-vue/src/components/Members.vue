@@ -22,25 +22,62 @@
                 Участник
               </v-card-title>
               <v-card-text>
-                <!-- <v-btn
-                  color="primary"
-                  dark
-                  @click=""
-                >
-                  Открыть
-                </v-btn> -->
-                <div>
-                  Фарару
-                </div>
-                <div>
-                  Количество персонажей
-                </div>
-                <v-select
-                  :items="roles"
-                  label="Роль"
-                  item-value="text"
-                  v-show="admin"
-                ></v-select>
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>Никнейм</v-list-item-subtitle>
+                    <v-list-item-title>
+                      {{ selectedUser.nickname ? selectedUser.nickname : '-' }}
+                    </v-list-item-title>
+                  </v-list-item-content>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>Имя</v-list-item-subtitle>
+                    <v-list-item-title>
+                      {{ selectedUser.first_name ? selectedUser.first_name : '-' }}
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>Роль</v-list-item-subtitle>
+                    <v-list-item-title>
+                      {{ selectedUser.role }}
+                    </v-list-item-title>
+                  </v-list-item-content>
+                  <v-list-item-content>
+                    <v-select
+                      :items="roles"
+                      label="Изменить роль"
+                      item-value="text"
+                      v-show="admin"
+                    ></v-select>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>Последний вход</v-list-item-subtitle>
+                    <v-list-item-title>
+                      {{ selectedUser.last_login }}
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-subtitle>Статус</v-list-item-subtitle>
+                    <v-list-item-title>
+                      {{ selectedUser.registration_status ? 'Подтвержден' : 'Не подтвержден' }}
+                    </v-list-item-title>
+                  </v-list-item-content>
+                  <v-list-item-content>
+                    <v-btn
+                      color="green"
+                      text
+                      @click="dialog = false"
+                      v-show="admin && !selectedUser.registration_status"
+                    >
+                      Подтвердить
+                    </v-btn>
+                  </v-list-item-content>
+                </v-list-item>
               </v-card-text>
               <v-card-actions>
                 <v-btn
@@ -85,7 +122,7 @@ export default {
   data: () => ({
     info: '',
     dialog: false,
-    admin: true,
+    admin: false,
     roles: [
       { text: 'Зам. главы' },
       { text: 'Офицер' },
@@ -101,7 +138,8 @@ export default {
       { text: 'Роль', value: 'role' },
       { text: 'Онлайн', value: 'last_login' }
     ],
-    userList: []
+    userList: [],
+    selectedUser: {}
   }),
   computed: {
     changedUserList: {
@@ -131,7 +169,7 @@ export default {
     },
     toUserInfo (userData) {
       this.dialog = true
-      console.log(userData.id)
+      this.selectedUser = userData
     },
     async getInfo (id) {
       try {
