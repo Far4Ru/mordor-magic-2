@@ -110,12 +110,28 @@ class CharacterEventSerializer(serializers.ModelSerializer):
         exclude = ['id']
 
 
+class CharacterEventOnlySerializer(serializers.ModelSerializer):
+    event = EventSerializer(read_only=True)
+
+    class Meta:
+        model = CharacterEvent
+        exclude = ['id', 'character']
+
+
 class CharacterEventsSerializer(serializers.ModelSerializer):
-    character_events = CharacterEventSerializer(read_only=True, many=True)
+    character_events = CharacterEventOnlySerializer(read_only=True, many=True)
 
     class Meta:
         model = Character
         fields = ['nickname', 'character_events']
+
+
+class UserCharacterEventsSerializer(serializers.ModelSerializer):
+    character = CharacterEventsSerializer(read_only=True)
+
+    class Meta:
+        model = CharacterOwner
+        fields = ['character']
 
 
 class CharacterEventsCountSerializer(serializers.ModelSerializer):

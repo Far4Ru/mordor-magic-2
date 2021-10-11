@@ -88,7 +88,9 @@
 
 |  Метод | Запрос  | Ответ | 
 |---|---|---|
-|  `GET` |   |  `HTTP_200_OK`<ul><li>`name`,`description`,`period`,`start_date`,`start_time`,`end_time`,`max_value`,`color`</li></ul>|
+|  `GET` |   |  `HTTP_200_OK`<ul><li>`name`,`description`,`period`,`period_parity`,`period_across`,`start_date`,`start_time`,`end_time`,`max_value`,`color`</li></ul>|
+|  `GET` |  `date`:`%d.%m.%Y %H:%M:%S` |  `HTTP_200_OK`<ul><li>`name`,`description`,`period`,`period_parity`,`period_across`,`start_date`,`start_time`,`end_time`,`max_value`,`color`</li></ul>|
+
 
 ## Персонажи и пользователи
 
@@ -216,6 +218,20 @@
           </td>
           <td>
             /api/user/
+          </td>
+          <td>
+            100%
+          </td>
+        </tr>
+        <tr>
+          <td>
+             events by date
+          </td>
+          <td>
+            События
+          </td>
+          <td>
+            /api/events/
           </td>
           <td>
             100%

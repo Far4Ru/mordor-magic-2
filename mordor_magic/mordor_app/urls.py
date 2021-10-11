@@ -7,6 +7,7 @@ urlpatterns = [
     path('user/', UserAPIView.as_view()),
     # path('user/delete/', 0),
     path('user/characters/', UserCharactersAPIView.as_view()),
+    path('user/characters/events/', UserCharacterEventsAPIView.as_view()),
     path('characters/', CharacterListAPIView.as_view()),
     path('characters/create/', CharacterCreateAPIView.as_view()),
     path('character/events/', CharacterEventsAPIView.as_view()),

@@ -44,6 +44,7 @@
                       </v-container>
                       <v-container>
                         <v-text-field
+                          v-model="editedItem.email"
                           label="Эл. почта"
                         ></v-text-field>
                       </v-container>
@@ -120,9 +121,29 @@
                 </v-dialog>
               </v-toolbar>
             </template>
-            <template v-slot:item.Дозор="{ item }">
+            <template v-slot:item.0="{ item }">
               <v-simple-checkbox
-                v-model="item.Дозор"
+                v-model="item[0]"
+              ></v-simple-checkbox>
+            </template>
+            <template v-slot:item.1="{ item }">
+              <v-simple-checkbox
+                v-model="item[1]"
+              ></v-simple-checkbox>
+            </template>
+            <template v-slot:item.2="{ item }">
+              <v-simple-checkbox
+                v-model="item[2]"
+              ></v-simple-checkbox>
+            </template>
+            <template v-slot:item.3="{ item }">
+              <v-simple-checkbox
+                v-model="item[3]"
+              ></v-simple-checkbox>
+            </template>
+            <template v-slot:item.4="{ item }">
+              <v-simple-checkbox
+                v-model="item[4]"
               ></v-simple-checkbox>
             </template>
             <template v-slot:item.actions="{ item }">
@@ -160,7 +181,7 @@ import server from '@/server'
 
 export default {
   components: { },
-  name: 'Members',
+  name: 'Characters',
   data: () => ({
     info: '',
     dialog: false,
@@ -181,17 +202,11 @@ export default {
     editedIndex: -1,
     editedItem: {
       name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0
+      email: ''
     },
     defaultItem: {
       name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0
+      email: ''
     },
     character_types: [
       'Основа',
@@ -288,17 +303,40 @@ export default {
       }
     },
     getCharacters () {
-      console.log(server)
-      this.characterList = [
-        {
-          name: 'Фарару',
-          Дозор: true,
-          'Задание наемника': 5
-        },
-        {
-          name: 'Фарфик'
-        }
-      ]
+      try {
+        var today = new Date()
+        var date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+        this.axios.defaults.headers.common.Authorization = 'Token ' + localStorage.getItem('user-token')
+        this.axios
+          .get(server + 'user/characters/events/', { params: { date: date } })
+          .then(response => {
+            var eventList = []
+            var array = response.data.map(item => [{ name: item.character.nickname }, item.character.character_events.map(item => [item.event.name, item.status])])
+            var res = []
+            for (var i = 0; i < array.length; i++) {
+              res.push(array[i][0])
+              for (var j = 0; j < array[i][1].length; j++) {
+                var eventItem = {}
+                eventItem[array[i][1][j][0]] = array[i][1][j][1]
+                res[i] = Object.assign({}, res[i], eventItem)
+                if (eventList.indexOf(array[i][1][j][0]) < 0) {
+                  eventList.push(array[i][1][j][0])
+                }
+              }
+            }
+            this.characterList = res
+            var m = []
+            for (i = 0; i < eventList.length; i++) {
+              var d = {}
+              d.text = eventList[i]
+              d.value = i
+              m.push(d)
+            }
+            this.headers = [].concat(this.headers[0], m, this.headers[this.headers.length - 1])
+          })
+      } catch (e) {
+        console.error('AN API ERROR', e)
+      }
     },
     getEvents () {
       try {

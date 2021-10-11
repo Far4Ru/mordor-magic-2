@@ -28,15 +28,6 @@ class CharacterListAPIView(generics.ListAPIView):
     model = Character
     queryset = Character.objects.all()
 
-    # def get_queryset(self):
-    #     nickname = self.request.GET.get('nickname')
-    #     if nickname:
-    #         try:
-    #             queryset = self.queryset.filter(nickname=nickname)
-    #         except ValueError:
-    #             queryset = self.Character.objects.none()
-    #         return queryset
-    #     return self.Character.objects.none()
     # def list(self, request):
     #     queryset = CharacterOwner.objects.filter(owner=request.user)
 
@@ -134,6 +125,19 @@ class CharacterEventsAPIView(generics.ListAPIView):
                 queryset = self.Character.objects.none()
             return queryset
         return self.Character.objects.none()
+
+
+class UserCharacterEventsAPIView(generics.ListAPIView):
+    serializer_class = CharacterOwnerSerializer
+    queryset = CharacterOwner.objects.all()
+
+    def list(self, request):
+        date = self.request.GET.get('date')
+        inner_character_event = CharacterEvent.objects.filter(date=date)
+        inner_character = Character.objects.filter(character_events__in=inner_character_event)
+        queryset = CharacterOwner.objects.filter(owner=request.user).filter(character__in=inner_character)
+        serializer = UserCharacterEventsSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class CharacterEventsCountAPIView(generics.ListAPIView):
