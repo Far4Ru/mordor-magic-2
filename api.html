@@ -224,7 +224,7 @@
 <tr>
 <td><code>PATCH</code></td>
 <td><ul><li><code>Authorization</code></li><li><code>'Content-Type': 'multipart/form-data'</code></li><li><code>first_name</code>, <code>last_name</code>, <code>nickname</code></li></ul></td>
-<td><code>HTTP_204_NO_CONTENT</code></td>
+<td><code>HTTP_201_CREATED</code>, <code>HTTP_204_NO_CONTENT</code></td>
 </tr>
 </tbody>
 </table>
@@ -461,10 +461,13 @@
              UPDATE User
           </td>
           <td>
-            -<br>Изменить данные пользователя
+            Изменить данные пользователя
           </td>
           <td>
             /user/update/
+          </td>
+          <td>
+            100%
           </td>
         </tr>
         <tr>
