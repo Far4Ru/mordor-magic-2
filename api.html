@@ -316,16 +316,21 @@ sum reputation today</p>
         <tr>
             <th>План</th>
             <th>Реализация</th>
+            <th>URL-адрес</th>
         </tr>
     </thead>
     <tbody align="center">
         <tr>
-            <td colspan=2><b>READ</b></td>
+            <td colspan=3><b>READ</b></td>
         </tr>
         <tr>
           <td>User
-          </td><td>
+          </td>
+          <td>
             Пользователи
+          </td>
+          <td>
+            /api/users/
           </td>
         </tr>
         <tr>
@@ -339,6 +344,9 @@ sum reputation today</p>
         <tr>
           <td>
              Character
+          </td>
+          <td>
+            Персонажи
           </td>
           <td>
             -
@@ -357,11 +365,14 @@ sum reputation today</p>
              Event
           </td>
           <td>
-            -
+            События по дате
+          </td>
+          <td>
+            /api/events/
           </td>
         </tr>
         <tr>
-          <td colspan="2">
+          <td colspan="3">
              <b>RELATED<b>
           </td>
         </tr>
@@ -398,7 +409,7 @@ sum reputation today</p>
           </td>
         </tr>
         <tr>
-          <td colspan="2">
+          <td colspan="3">
              <b>CREATE<b>
           </td>
         </tr>
@@ -407,7 +418,10 @@ sum reputation today</p>
              CREATE User
           </td>
           <td>
-            -
+            Создание пользователя
+          </td>
+          <td>
+            /auth/users/
           </td>
         </tr>
         <tr>
@@ -427,7 +441,7 @@ sum reputation today</p>
           </td>
         </tr>
         <tr>
-          <td colspan="2">
+          <td colspan="3">
              <b>UPDATE<b>
           </td>
         </tr>
@@ -436,7 +450,21 @@ sum reputation today</p>
              UPDATE User
           </td>
           <td>
-            -
+            Изменить данные пользователя
+          </td>
+          <td>
+            /user/[id]/
+          </td>
+        </tr>
+        <tr>
+          <td>
+             UPDATE User Password
+          </td>
+          <td>
+            Изменить пароль
+          </td>
+          <td>
+            /auth/users/set_password/
           </td>
         </tr>
         <tr>
@@ -456,7 +484,7 @@ sum reputation today</p>
           </td>
         </tr>
         <tr>
-          <td colspan="2">
+          <td colspan="3">
              <b>DELETE<b>
           </td>
         </tr>
@@ -482,6 +510,44 @@ sum reputation today</p>
           </td>
           <td>
             -
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+             <b>TOKEN</b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+             Login
+          </td>
+          <td>
+            Вход пользователя
+          </td>
+          <td>
+            /auth/token/login/
+          </td>
+        </tr>
+        <tr>
+          <td>
+             Logout
+          </td>
+          <td>
+            Выход
+          </td>
+          <td>
+            /auth/token/logout/
+          </td>
+        </tr>
+        <tr>
+          <td>
+             Check
+          </td>
+          <td>
+            Проверка пользователя
+          </td>
+          <td>
+            /auth/users/me/
           </td>
         </tr>
     </tbody>
