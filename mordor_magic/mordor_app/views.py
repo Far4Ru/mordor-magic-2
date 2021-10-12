@@ -1,7 +1,6 @@
 from datetime import datetime
 from itertools import chain
 
-from django.db import transaction
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import User, Character
@@ -12,32 +11,26 @@ from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 
 
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 class CharacterCreateAPIView(generics.CreateAPIView):
     serializer_class = CharacterCreateSerializer
     queryset = Character.objects.all()
 
-    # def create(self, request, *args, **kwargs):
-    #     serializer = self.serializer_class(...)
-    #     data = serializer.data
-    #     return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
 
-
+@permission_classes([IsAuthenticated])
 class CharacterListAPIView(generics.ListAPIView):
     serializer_class = CharacterPublicSerializer
     model = Character
     queryset = Character.objects.all()
 
-    # def list(self, request):
-    #     queryset = CharacterOwner.objects.filter(owner=request.user)
 
-
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 class UserListAPIView(generics.ListAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
 
+@permission_classes([IsAuthenticated])
 class EventListAPIView(generics.ListAPIView):
     serializer_class = EventSerializer
     queryset = Event.objects.all()
@@ -55,7 +48,7 @@ class EventListAPIView(generics.ListAPIView):
                     .filter(start_date__iso_week_day=date_time_obj.weekday())
                 queryset_week1 = self.queryset.filter(period="w")\
                     .filter(period_across=1)\
-                    .filter(start_date__iso_week_day=date_time_obj.weekday())
+                    .filter(start_date__iso_week_day=date_time_obj.isoweekday())
                 queryset = list(chain(queryset, queryset_week1, queryset_week2))
             except ValueError:
                 queryset = self.model.objects.none()
@@ -63,7 +56,7 @@ class EventListAPIView(generics.ListAPIView):
         return self.model.objects.all()
 
 
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 class UserAPIView(generics.ListAPIView):
     model = User
     serializer_class = UserSerializer
@@ -73,11 +66,9 @@ class UserAPIView(generics.ListAPIView):
         username = self.request.GET.get('username')
         if not username:
             username = self.request.user.username
-        # user = self.request.username
         if username:
             try:
                 queryset = self.queryset.filter(username=username)
-                # User.objects.filter(username=username)
             except ValueError:
                 queryset = self.model.objects.none()
             return queryset
@@ -92,9 +83,8 @@ class UserAPIView(generics.ListAPIView):
             return Response(status=status.HTTP_201_CREATED, data=serializer.data)
         return Response(status=status.HTTP_400_BAD_REQUEST, data="wrong parameters")
 
-# [IsAdminUser]
 
-
+@permission_classes([IsAuthenticated])
 class UserCharactersAPIView(generics.ListAPIView):
     serializer_class = UserCharactersSerializer
     queryset = User.objects.all()
@@ -104,13 +94,13 @@ class UserCharactersAPIView(generics.ListAPIView):
         if username:
             try:
                 queryset = self.queryset.filter(username=username)
-                # User.objects.filter(username=username)
             except ValueError:
                 queryset = self.User.objects.none()
             return queryset
         return self.User.objects.none()
 
 
+@permission_classes([IsAuthenticated])
 class CharacterEventsAPIView(generics.ListAPIView):
     serializer_class = CharacterEventsSerializer
     queryset = Character.objects.all()
@@ -120,13 +110,13 @@ class CharacterEventsAPIView(generics.ListAPIView):
         if nickname:
             try:
                 queryset = self.queryset.filter(nickname=nickname)
-                # User.objects.filter(username=username)
             except ValueError:
                 queryset = self.Character.objects.none()
             return queryset
         return self.Character.objects.none()
 
 
+@permission_classes([IsAuthenticated])
 class UserCharacterEventsAPIView(generics.ListAPIView):
     serializer_class = CharacterOwnerSerializer
     queryset = CharacterOwner.objects.all()
@@ -140,6 +130,7 @@ class UserCharacterEventsAPIView(generics.ListAPIView):
         return Response(serializer.data)
 
 
+@permission_classes([IsAuthenticated])
 class CharacterEventsCountAPIView(generics.ListAPIView):
     serializer_class = CharacterEventsCountSerializer
     queryset = Character.objects.all()
@@ -149,18 +140,19 @@ class CharacterEventsCountAPIView(generics.ListAPIView):
         if nickname:
             try:
                 queryset = self.queryset.filter(nickname=nickname)
-                # User.objects.filter(username=username)
             except ValueError:
                 queryset = self.Character.objects.none()
             return queryset
         return self.Character.objects.none()
 
 
+@permission_classes([IsAuthenticated])
 class CharacterOwnersListAPIView(generics.ListAPIView):
     serializer_class = CharacterOwnerSerializer
     queryset = CharacterOwner.objects.all()
 
 
+@permission_classes([IsAuthenticated])
 class CharacterEventsListAPIView(generics.ListAPIView):
     serializer_class = CharacterEventSerializer
     queryset = CharacterEvent.objects.all()

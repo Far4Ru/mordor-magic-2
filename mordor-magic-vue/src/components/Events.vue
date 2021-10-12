@@ -80,28 +80,7 @@ export default {
   name: 'Members',
   data: () => ({
     info: '',
-    events: [
-      {
-        color: 'cyan',
-        year: '12:00'
-      },
-      {
-        color: 'green',
-        year: '15:00'
-      },
-      {
-        color: 'pink',
-        year: '19:30'
-      },
-      {
-        color: 'amber',
-        year: '20:00'
-      },
-      {
-        color: 'orange',
-        year: '21:00'
-      }
-    ],
+    events: [],
     checkbox: true
   }),
   computed: {
