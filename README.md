@@ -35,7 +35,7 @@
 
 ![Персонажи](https://github.com/Far4Ru/mordor-magic-2/blob/master/images/characters.png)
 
-![Участники](https://github.com/Far4Ru/mordor-magic-2/blob/master/images/members.png)
+![Участники](https://github.com/Far4Ru/mordor-magic-2/blob/master/images/members_profile_by_admin.png)
 
 ![События](https://github.com/Far4Ru/mordor-magic-2/blob/master/images/events_day.png)
 
